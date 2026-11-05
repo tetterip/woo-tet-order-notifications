@@ -1,0 +1,212 @@
+# Security + compatibility health check for a ttrp.gr WooCommerce plugin.
+# Source of truth: plugins.ttrp.gr-autoupdater/client/health-check.yml (synced by client/sync-health-check.sh).
+# Runs on the 1st and 16th of every month, on pushes to the default branch and by hand.
+# Results go to one GitHub issue labelled "health-check" (updated each run, closed when clean).
+# The suite's Claude routine reads that issue and opens a PR with fixes and header bumps.
+name: Health check
+
+on:
+  schedule:
+    - cron: '17 5 1,16 * *'
+  workflow_dispatch:
+  push:
+    branches: [ main, master ]
+    paths: [ '**.php', '.github/workflows/health-check.yml' ]
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: health-check
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Read plugin header
+        id: header
+        run: |
+          main=$(grep -l -m1 -E '^[[:space:]/*#@]*Plugin Name:' ./*.php | head -1)
+          [ -n "$main" ] || { echo "No plugin header found" >&2; exit 1; }
+          field() { grep -m1 -E "^[[:space:]/*#@]*$1:" "$main" | sed -E "s/^[^:]*:[[:space:]]*//; s/[[:space:]]*$//"; }
+          min_php=$(field 'Requires PHP'); min_php=${min_php:-7.4}
+          {
+            echo "main=$main"
+            echo "version=$(field 'Version')"
+            echo "min_php=$min_php"
+            echo "wp_tested=$(field 'Tested up to')"
+            echo "wc_tested=$(field 'WC tested up to')"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Setup PHP (latest)
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: latest
+          tools: composer
+          coverage: none
+
+      - name: Lint (latest PHP)
+        run: |
+          php -v | head -1 | tee "$RUNNER_TEMP/php-latest.txt"
+          find . -name '*.php' -not -path './vendor/*' -not -path './node_modules/*' -print0 \
+            | xargs -0 -n1 -P4 php -l 2>&1 | grep -v '^No syntax errors' > "$RUNNER_TEMP/lint-latest.txt" || true
+
+      - name: Install PHPCS standards
+        working-directory: ${{ runner.temp }}
+        run: |
+          mkdir phpcs && cd phpcs
+          composer init -n --name ttrp/health-check >/dev/null
+          composer config minimum-stability alpha
+          composer config prefer-stable true
+          composer config allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
+          composer require -q --no-progress \
+            squizlabs/php_codesniffer:^3.13 wp-coding-standards/wpcs:^3 \
+            "phpcompatibility/phpcompatibility-wp:^3.0@alpha" "phpcompatibility/php-compatibility:^10.0@alpha"
+
+      - name: PHPCS (security + PHP compatibility)
+        run: |
+          cat > "$RUNNER_TEMP/ruleset.xml" <<'EOF'
+          <?xml version="1.0"?>
+          <ruleset name="ttrp-health-check">
+            <arg name="extensions" value="php"/>
+            <exclude-pattern>*/vendor/*</exclude-pattern>
+            <exclude-pattern>*/node_modules/*</exclude-pattern>
+            <exclude-pattern>*/ttrp-common/*</exclude-pattern>
+            <exclude-pattern>*/tests/*</exclude-pattern>
+            <exclude-pattern>*/tools/*</exclude-pattern>
+            <exclude-pattern>*/bin/*</exclude-pattern>
+            <exclude-pattern>*/lib/*</exclude-pattern>
+            <rule ref="PHPCompatibilityWP"/>
+            <rule ref="WordPress.Security"/>
+            <rule ref="WordPress.DB.PreparedSQL"/>
+            <rule ref="WordPress.DB.PreparedSQLPlaceholders"/>
+            <rule ref="WordPress.WP.DeprecatedFunctions"/>
+            <rule ref="WordPress.WP.DeprecatedClasses"/>
+            <rule ref="WordPress.WP.DeprecatedParameters"/>
+            <rule ref="WordPress.PHP.RestrictedPHPFunctions"/>
+            <rule ref="WordPress.PHP.DiscouragedPHPFunctions">
+              <properties>
+                <property name="exclude" type="array">
+                  <element value="obfuscation"/><element value="serialize"/><element value="urlencode"/><element value="runtime_configuration"/>
+                </property>
+              </properties>
+            </rule>
+            <rule ref="Squiz.PHP.Eval"/>
+          </ruleset>
+          EOF
+          "$RUNNER_TEMP/phpcs/vendor/bin/phpcs" -q --standard="$RUNNER_TEMP/ruleset.xml" \
+            --runtime-set testVersion "${{ steps.header.outputs.min_php }}-" \
+            --runtime-set minimum_wp_version 6.0 \
+            --basepath=. --report=json --report-file="$RUNNER_TEMP/phpcs.json" . || true
+
+      - name: Setup PHP (minimum ${{ steps.header.outputs.min_php }})
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ steps.header.outputs.min_php }}
+          coverage: none
+
+      - name: Lint (minimum PHP)
+        run: |
+          find . -name '*.php' -not -path './vendor/*' -not -path './node_modules/*' -print0 \
+            | xargs -0 -n1 -P4 php -l 2>&1 | grep -v '^No syntax errors' > "$RUNNER_TEMP/lint-min.txt" || true
+
+      - name: Latest WordPress and WooCommerce
+        run: |
+          curl -fsS --retry 3 https://api.wordpress.org/core/version-check/1.7/ \
+            | php -r '$j = json_decode( stream_get_contents( STDIN ), true ); echo $j["offers"][0]["current"] ?? "";' > "$RUNNER_TEMP/wp-latest.txt" || true
+          curl -fsS --retry 3 'https://api.wordpress.org/plugins/info/1.2/?action=plugin_information&request%5Bslug%5D=woocommerce&request%5Bfields%5D%5Bsections%5D=0' \
+            | php -r '$j = json_decode( stream_get_contents( STDIN ), true ); echo $j["version"] ?? "";' > "$RUNNER_TEMP/wc-latest.txt" || true
+
+      - name: Build report
+        id: report
+        env:
+          T: ${{ runner.temp }}
+          MIN_PHP: ${{ steps.header.outputs.min_php }}
+          VERSION: ${{ steps.header.outputs.version }}
+          WP_TESTED: ${{ steps.header.outputs.wp_tested }}
+          WC_TESTED: ${{ steps.header.outputs.wc_tested }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          cat > "$T/report.php" <<'EOF'
+          <?php
+          $t   = getenv( 'T' );
+          $rd  = function ( $f ) use ( $t ) { return is_file( "$t/$f" ) ? trim( file_get_contents( "$t/$f" ) ) : ''; };
+          $mm  = function ( $v ) { return preg_match( '/^(\d+)\.(\d+)/', (string) $v, $m ) ? $m[1] . '.' . $m[2] : ''; };
+          $esc = function ( $s ) { return str_replace( array( '|', "\n" ), array( '\|', ' ' ), (string) $s ); };
+          $problems = 0;
+          $rows     = array();
+
+          // Tested up to.
+          foreach ( array( array( 'WordPress', getenv( 'WP_TESTED' ), $rd( 'wp-latest.txt' ), 'Tested up to' ),
+                           array( 'WooCommerce', getenv( 'WC_TESTED' ), $rd( 'wc-latest.txt' ), 'WC tested up to' ) ) as $c ) {
+            list( $name, $have, $latest, $hdr ) = $c;
+            if ( '' === $latest ) { $state = '⚠️ could not fetch the latest version'; }
+            elseif ( '' === $have ) { $state = "❌ no `$hdr` header"; $problems++; }
+            elseif ( version_compare( $mm( $have ), $mm( $latest ), '<' ) ) { $state = "❌ behind: test, then bump `$hdr` to " . $mm( $latest ) . '"; $problems++; }
+            else { $state = '✅'; }
+            $rows[] = "| $name | `$hdr: " . ( '' === $have ? '—' : $have ) . "` | " . ( '' === $latest ? '?' : $latest ) . " | $state |";
+          }
+
+          // Lint.
+          $lint = array();
+          foreach ( array( 'min' => 'PHP ' . getenv( 'MIN_PHP' ) . ' (Requires PHP)', 'latest' => $rd( 'php-latest.txt' ) ) as $k => $label ) {
+            $out = $rd( "lint-$k.txt" );
+            $label = preg_replace( '/^PHP (\S+).*/', 'PHP $1', $label );
+            if ( '' !== $out ) { $problems++; $lint[] = "**$label** — syntax errors:\n```\n$out\n```"; }
+            $rows[] = "| Syntax | $label | | " . ( '' === $out ? '✅' : '❌ errors (see below)' ) . ' |';
+          }
+
+          // PHPCS.
+          $j = json_decode( $rd( 'phpcs.json' ), true );
+          $groups = array( 'compat' => array(), 'security' => array(), 'deprecated' => array() );
+          if ( ! is_array( $j ) ) {
+            $rows[] = '| PHPCS | | | ⚠️ did not run (see the workflow log) |';
+          } else {
+            foreach ( $j['files'] as $file => $d ) {
+              foreach ( $d['messages'] as $m ) {
+                $src = $m['source'];
+                $g   = 0 === strpos( $src, 'PHPCompatibility' ) ? 'compat' : ( false !== strpos( $src, 'Deprecated' ) ? 'deprecated' : 'security' );
+                $groups[ $g ][] = '| `' . $esc( ltrim( $file, './' ) ) . ':' . $m['line'] . '` | ' . ( 'ERROR' === $m['type'] ? 'error' : 'warning' ) . ' | ' . $esc( $m['message'] ) . ' | `' . $src . '` |';
+              }
+            }
+            $labels = array( 'compat' => 'PHP compatibility (' . getenv( 'MIN_PHP' ) . '+)', 'security' => 'Security (WPCS)', 'deprecated' => 'Deprecated WordPress APIs' );
+            foreach ( $groups as $g => $list ) {
+              $problems += count( $list );
+              $rows[] = '| ' . $labels[ $g ] . ' | | | ' . ( $list ? '❌ ' . count( $list ) . ' findings' : '✅' ) . ' |';
+            }
+          }
+
+          $body  = "<!-- ttrp-health-check -->\nAutomatic check of **v" . getenv( 'VERSION' ) . '** on ' . gmdate( 'Y-m-d' ) . ' ([run](' . getenv( 'RUN_URL' ) . "))\n\n";
+          $body .= "| Check | Plugin | Latest | Result |\n|---|---|---|---|\n" . implode( "\n", $rows ) . "\n";
+          if ( $lint ) { $body .= "\n" . implode( "\n\n", $lint ) . "\n"; }
+          foreach ( array( 'compat' => 'PHP compatibility', 'deprecated' => 'Deprecated WordPress APIs', 'security' => 'Security' ) as $g => $title ) {
+            if ( empty( $groups[ $g ] ) ) { continue; }
+            $body .= "\n<details><summary><b>$title</b> (" . count( $groups[ $g ] ) . ")</summary>\n\n| Where | Type | Message | Sniff |\n|---|---|---|---|\n" . implode( "\n", $groups[ $g ] ) . "\n\n</details>\n";
+          }
+          $body .= "\nFix real problems; for a false positive add `// phpcs:ignore <Sniff> -- <reason>` on that line so it stops being reported. This issue is updated on every run and closed when everything passes.\n";
+          if ( strlen( $body ) > 60000 ) { $body = substr( $body, 0, 60000 ) . "\n\n… truncated, see the run log.\n"; }
+          file_put_contents( "$t/report.md", $body );
+          file_put_contents( getenv( 'GITHUB_OUTPUT' ), "problems=$problems\n", FILE_APPEND );
+          echo $body;
+          EOF
+          php "$T/report.php" | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - name: Update the health-check issue
+        if: github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PROBLEMS: ${{ steps.report.outputs.problems }}
+        run: |
+          gh label create health-check --color D93F0B --description "Automatic security and compatibility check" --force >/dev/null
+          num=$(gh issue list --label health-check --state open --json number --jq '.[0].number // empty')
+          if [ "$PROBLEMS" = "0" ]; then
+            if [ -n "$num" ]; then gh issue close "$num" --comment "All checks pass ($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID)."; fi
+          elif [ -n "$num" ]; then
+            gh issue edit "$num" --body-file "$RUNNER_TEMP/report.md"
+          else
+            gh issue create --title "Health check: security & compatibility" --label health-check --body-file "$RUNNER_TEMP/report.md"
+          fi
