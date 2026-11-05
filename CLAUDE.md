@@ -113,6 +113,9 @@ User meta `tet_notify_muted` (yes/no). Order meta `_tet_notify_sent` (timestamp)
 - `assets/js/live.js` was checked in headless Chromium against a mocked endpoint (unlock, pop-up, title count, dedupe,
   mute). **Not yet run in a real WordPress** (the cloud session that wrote it couldn't reach wordpress.org): do the
   checklist below in `/playground` before the first release.
+- 2026-11-05 on playground.ttrp.eu (Chrome, Greek admin): installed from zip, "Play the sound" plays the bundled
+  `new-order-el.mp3`. Assets carry the file time in `?ver=` (`tet_notify_asset_ver()`), because a reinstalled zip
+  with the same version kept a cached `live.js`.
 
 ## Manual testing checklist
 
