@@ -1,0 +1,179 @@
+/* TTRP Plugin Settings — shared admin design system */
+
+/* ── Page wrapper ─────────────────────────────────────────── */
+
+.ttrp-wrap {
+    max-width: 900px;
+}
+
+/* ── Plugin header ────────────────────────────────────────── */
+
+.ttrp-plugin-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 0 12px;
+    border-bottom: 1px solid #dcdcde;
+    margin-bottom: 20px;
+}
+
+.ttrp-plugin-header h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 1.3em;
+    line-height: 1.2;
+}
+
+.ttrp-plugin-version {
+    display: inline-block;
+    font-size: 11px;
+    color: #646970;
+    background: #f0f0f1;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 400;
+}
+
+/* ── Form table ───────────────────────────────────────────── */
+
+.wrap.woocommerce .form-table th {
+    width: 220px;
+    padding-top: 18px;
+    vertical-align: top;
+}
+
+.wrap.woocommerce p.submit {
+    padding: 1em 0 0;
+    margin-top: 0;
+}
+
+/* ── Badges ───────────────────────────────────────────────── */
+
+.ttrp-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1.6;
+    vertical-align: middle;
+}
+
+.ttrp-badge--success {
+    background: #d1e7dd;
+    color: #0a4a26;
+}
+
+.ttrp-badge--error {
+    background: #f8d7da;
+    color: #58151c;
+}
+
+.ttrp-badge--info {
+    background: #cfe2ff;
+    color: #052c65;
+}
+
+.ttrp-badge--warning {
+    background: #fff3cd;
+    color: #664d03;
+}
+
+.ttrp-badge--neutral {
+    background: #e9ecef;
+    color: #343a40;
+}
+
+/* ── Notices ──────────────────────────────────────────────── */
+
+.ttrp-notice {
+    padding: 10px 14px;
+    border-left: 4px solid;
+    margin: 12px 0;
+    border-radius: 0 3px 3px 0;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.ttrp-notice p:last-child {
+    margin-bottom: 0;
+}
+
+.ttrp-notice--success {
+    background: #d1e7dd;
+    border-color: #00a32a;
+    color: #0a4a26;
+}
+
+.ttrp-notice--error {
+    background: #f8d7da;
+    border-color: #d63638;
+    color: #58151c;
+}
+
+.ttrp-notice--warning {
+    background: #fff3cd;
+    border-color: #dba617;
+    color: #664d03;
+}
+
+.ttrp-notice--info {
+    background: #f0f6fc;
+    border-color: #72aee6;
+    color: #052c65;
+}
+
+/* ── Order / metabox panel ────────────────────────────────── */
+
+.ttrp-order-panel {
+    font-size: 13px;
+    padding: 10px 0;
+}
+
+.ttrp-order-panel h3,
+.ttrp-order-panel h4 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #50575e;
+    margin: 0 0 10px;
+    font-weight: 600;
+}
+
+.ttrp-order-panel p {
+    margin: 4px 0;
+    color: #50575e;
+}
+
+/* ── Settings footer ──────────────────────────────────────── */
+
+.ttrp-settings-footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 2em;
+    padding: 0.75em 0;
+    border-top: 1px solid #dcdcde;
+    color: #646970;
+    font-size: 12px;
+    line-height: 1;
+}
+
+.ttrp-settings-footer img {
+    width: 40px;
+    height: 18px;
+    opacity: 1;
+    vertical-align: middle;
+}
+
+.ttrp-settings-footer a {
+    color: #646970;
+    text-decoration: none;
+}
+
+.ttrp-settings-footer a:hover {
+    color: #2271b1;
+    text-decoration: underline;
+}

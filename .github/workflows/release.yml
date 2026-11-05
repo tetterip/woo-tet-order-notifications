@@ -1,0 +1,51 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  # Manual release (e.g. from the GitHub app): creates the vX.Y.Z tag on the current main.
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (X.Y.Z, must match the plugin header)'
+        required: true
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get version
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            VERSION="${{ github.event.inputs.version }}"
+          else
+            VERSION="${GITHUB_REF_NAME#v}"
+          fi
+          HEADER=$(sed -n 's/^ \* Version: *//p' woo-tet-order-notifications.php | tr -d '[:space:]')
+          if [ "$VERSION" != "$HEADER" ]; then
+            echo "::error::Version $VERSION does not match the plugin header ($HEADER)"
+            exit 1
+          fi
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Build plugin zip
+        run: |
+          mkdir -p woo-tet-order-notifications
+          cp woo-tet-order-notifications.php uninstall.php LICENSE woo-tet-order-notifications/
+          cp -r includes assets languages ttrp-common woo-tet-order-notifications/
+          zip -r "woo-tet-order-notifications-${{ steps.version.outputs.VERSION }}.zip" woo-tet-order-notifications/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.version.outputs.VERSION }}
+          target_commitish: ${{ github.sha }}
+          files: woo-tet-order-notifications-${{ steps.version.outputs.VERSION }}.zip
+          generate_release_notes: true

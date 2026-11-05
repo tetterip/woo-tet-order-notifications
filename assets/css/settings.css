@@ -1,0 +1,15 @@
+/* Order Notifications: settings page. */
+.tet-notify-test-result {
+	margin-left: 8px;
+	vertical-align: middle;
+}
+.tet-notify-test-result.is-ok {
+	color: #008a20;
+}
+.tet-notify-test-result.is-error {
+	color: #d63638;
+}
+.tet-notify-tags code {
+	display: inline-block;
+	margin: 0 4px 6px 0;
+}

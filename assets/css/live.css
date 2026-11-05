@@ -1,0 +1,142 @@
+/* Order Notifications: admin pop-ups and the bell in the admin bar. */
+
+#tet-notify-toasts {
+	position: fixed;
+	right: 20px;
+	bottom: 20px;
+	z-index: 100000;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	gap: 10px;
+	max-height: calc(100vh - 80px);
+	overflow-y: auto;
+}
+
+.tet-notify-toast {
+	box-sizing: border-box;
+	width: 320px;
+	max-width: calc(100vw - 40px);
+	padding: 14px 16px;
+	background: #fff;
+	color: #1d2327;
+	border-left: 4px solid #7f54b3;
+	border-radius: 6px;
+	box-shadow: 0 8px 24px rgba(0, 0, 0, .18);
+	font-size: 13px;
+	line-height: 1.5;
+	animation: tet-notify-in .35s ease-out;
+}
+
+.tet-notify-head {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 6px;
+	font-size: 14px;
+}
+
+.tet-notify-head .dashicons {
+	color: #7f54b3;
+}
+
+.tet-notify-head strong {
+	flex: 1;
+}
+
+.tet-notify-close {
+	border: 0;
+	background: none;
+	color: #646970;
+	font-size: 20px;
+	line-height: 1;
+	cursor: pointer;
+	padding: 0 2px;
+}
+
+.tet-notify-close:hover,
+.tet-notify-close:focus {
+	color: #1d2327;
+}
+
+.tet-notify-total {
+	font-weight: 600;
+}
+
+.tet-notify-items {
+	margin-top: 4px;
+	color: #50575e;
+	white-space: pre-line;
+}
+
+.tet-notify-toast .tet-notify-open {
+	margin-top: 10px;
+}
+
+.tet-notify-close-all {
+	border: 0;
+	border-radius: 4px;
+	padding: 4px 10px;
+	background: #1d2327;
+	color: #fff;
+	cursor: pointer;
+	font-size: 12px;
+}
+
+@keyframes tet-notify-in {
+	from {
+		opacity: 0;
+		transform: translateY(16px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.tet-notify-toast {
+		animation: none;
+	}
+}
+
+/* Admin bar bell */
+#wpadminbar .tet-notify-ab .ab-icon:before {
+	top: 2px;
+}
+
+#wpadminbar .tet-notify-ab.tet-notify-muted .ab-icon:before {
+	opacity: .5;
+}
+
+#wpadminbar .tet-notify-ab.tet-notify-locked > .ab-item,
+#wpadminbar .tet-notify-ab.tet-notify-expired > .ab-item {
+	color: #f0b849;
+}
+
+#wpadminbar .tet-notify-ab.tet-notify-locked .ab-icon:before,
+#wpadminbar .tet-notify-ab.tet-notify-expired .ab-icon:before {
+	color: #f0b849;
+}
+
+#wpadminbar .tet-notify-ab .tet-notify-ab-label {
+	margin-left: 2px;
+}
+
+/* Label only when it asks for something; otherwise just the bell. */
+#wpadminbar .tet-notify-ab:not(.tet-notify-locked):not(.tet-notify-expired) .tet-notify-ab-label {
+	display: none;
+}
+
+@media screen and (max-width: 782px) {
+	#wpadminbar li#wp-admin-bar-tet-notify {
+		display: block;
+	}
+	#wpadminbar .tet-notify-ab .tet-notify-ab-label {
+		display: none;
+	}
+	#wpadminbar .tet-notify-ab .ab-icon:before {
+		font-size: 28px;
+		top: 0;
+	}
+}

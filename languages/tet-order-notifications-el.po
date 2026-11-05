@@ -1,0 +1,471 @@
+# Greek translation for Order Notifications for WooCommerce.
+# Copyright (C) ttrp.gr
+# This file is distributed under the GPL-2.0+ license.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Order Notifications for WooCommerce\n"
+"Report-Msgid-Bugs-To: https://ttrp.gr\n"
+"POT-Creation-Date: 2026-11-05 12:00+0200\n"
+"PO-Revision-Date: 2026-11-05 12:00+0200\n"
+"Last-Translator: ttrp.gr\n"
+"Language-Team: ttrp.gr\n"
+"Language: el\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: tet-order-notifications\n"
+
+#: includes/class-tet-notify-channels.php:18 includes/class-tet-notify-settings.php:379
+msgid "Email"
+msgstr "Email"
+
+#: includes/class-tet-notify-channels.php:19 includes/class-tet-notify-settings.php:403
+msgid "Webhook"
+msgstr "Webhook"
+
+#: includes/class-tet-notify-channels.php:64
+msgid "The bot token looks wrong. It has the form 123456789:ABC… (from @BotFather)."
+msgstr "Το token του bot δεν φαίνεται σωστό. Έχει τη μορφή 123456789:ABC… (από το @BotFather)."
+
+#: includes/class-tet-notify-channels.php:67
+msgid "Add at least one chat ID."
+msgstr "Προσθέστε τουλάχιστον ένα chat ID."
+
+#: includes/class-tet-notify-channels.php:71
+msgid "The webhook URL must start with https://hooks.slack.com/"
+msgstr "Το webhook URL πρέπει να ξεκινά με https://hooks.slack.com/"
+
+#: includes/class-tet-notify-channels.php:73
+msgid "The webhook URL must look like https://discord.com/api/webhooks/…"
+msgstr "Το webhook URL πρέπει να έχει τη μορφή https://discord.com/api/webhooks/…"
+
+#: includes/class-tet-notify-channels.php:75
+msgid "Add at least one valid email address."
+msgstr "Προσθέστε τουλάχιστον μία έγκυρη διεύθυνση email."
+
+#: includes/class-tet-notify-channels.php:77
+msgid "Enter a URL starting with https:// or http://"
+msgstr "Συμπληρώστε ένα URL που ξεκινά με https:// ή http://"
+
+#: includes/class-tet-notify-channels.php:79 includes/class-tet-notify-channels.php:123 includes/class-tet-notify-settings.php:623
+msgid "Unknown channel."
+msgstr "Άγνωστο κανάλι."
+
+#. translators: %s: notification title.
+#: includes/class-tet-notify-channels.php:98
+msgid "[Test] %s"
+msgstr "[Δοκιμή] %s"
+
+#. translators: %s: order number.
+#: includes/class-tet-notify-channels.php:101 includes/class-tet-notify-live.php:72
+msgid "Open order"
+msgstr "Άνοιγμα παραγγελίας"
+
+#: includes/class-tet-notify-channels.php:119
+msgid "WordPress could not send the email (wp_mail failed)."
+msgstr "Το WordPress δεν μπόρεσε να στείλει το email (το wp_mail απέτυχε)."
+
+#: includes/class-tet-notify-channels.php:144
+msgid "Could not reach Telegram."
+msgstr "Δεν ήταν δυνατή η σύνδεση με το Telegram."
+
+#. translators: 1: chat ID, 2: error from Telegram.
+#: includes/class-tet-notify-channels.php:150
+msgid "Telegram refused the message for chat %1$s: %2$s"
+msgstr "Το Telegram απέρριψε το μήνυμα για το chat %1$s: %2$s"
+
+#: includes/class-tet-notify-channels.php:173
+msgid "the webhook"
+msgstr "το webhook"
+
+#. translators: 1: service host, 2: error message.
+#: includes/class-tet-notify-channels.php:190
+msgid "Could not reach %1$s: %2$s"
+msgstr "Δεν ήταν δυνατή η σύνδεση με %1$s: %2$s"
+
+#. translators: 1: service host, 2: HTTP status code, 3: response text.
+#: includes/class-tet-notify-channels.php:196
+msgid "%1$s answered HTTP %2$d. %3$s"
+msgstr "Το %1$s απάντησε HTTP %2$d. %3$s"
+
+#. translators: %s: list of channels with the error of each.
+#: includes/class-tet-notify-dispatcher.php:96
+msgid "Order notification failed. %s"
+msgstr "Η ειδοποίηση της παραγγελίας απέτυχε. %s"
+
+#. translators: %s: order number.
+#: includes/class-tet-notify-live.php:71
+msgid "New order #%s"
+msgstr "Νέα παραγγελία #%s"
+
+#. translators: %s: order number.
+#: includes/class-tet-notify-live.php:73
+msgid "Close"
+msgstr "Κλείσιμο"
+
+#: includes/class-tet-notify-live.php:74
+msgid "Close all"
+msgstr "Κλείσιμο όλων"
+
+#: includes/class-tet-notify-live.php:75
+msgid "Order alerts: sound on"
+msgstr "Ειδοποιήσεις παραγγελιών: ήχος ενεργός"
+
+#: includes/class-tet-notify-live.php:76
+msgid "Order alerts: muted"
+msgstr "Ειδοποιήσεις παραγγελιών: σίγαση"
+
+#: includes/class-tet-notify-live.php:77
+msgid "Click to enable sound"
+msgstr "Κάντε κλικ για ενεργοποίηση ήχου"
+
+#: includes/class-tet-notify-live.php:78 includes/class-tet-notify-live.php:112
+msgid "Enable desktop notifications"
+msgstr "Ενεργοποίηση ειδοποιήσεων υπολογιστή"
+
+#: includes/class-tet-notify-live.php:79
+msgid "Order alerts paused: log in again"
+msgstr "Οι ειδοποιήσεις σταμάτησαν: συνδεθείτε ξανά"
+
+#: includes/class-tet-notify-live.php:80 includes/class-tet-notify-live.php:100
+msgid "Mute"
+msgstr "Σίγαση"
+
+#: includes/class-tet-notify-live.php:81 includes/class-tet-notify-live.php:100
+msgid "Unmute"
+msgstr "Κατάργηση σίγασης"
+
+#: includes/class-tet-notify-live.php:106
+msgid "Play the sound"
+msgstr "Αναπαραγωγή ήχου"
+
+#: includes/class-tet-notify-live.php:119 includes/class-tet-notify-settings.php:104
+msgid "Settings"
+msgstr "Ρυθμίσεις"
+
+#: includes/class-tet-notify-order-data.php:79
+msgid "Sample product"
+msgstr "Δοκιμαστικό προϊόν"
+
+#: includes/class-tet-notify-order-data.php:80
+msgid "Another product"
+msgstr "Άλλο προϊόν"
+
+#: includes/class-tet-notify-order-data.php:90
+msgid "Cash on delivery"
+msgstr "Αντικαταβολή"
+
+#: includes/class-tet-notify-order-data.php:92
+msgid "Courier"
+msgstr "Courier"
+
+#: includes/class-tet-notify-order-data.php:93
+msgid "Maria Papadopoulou"
+msgstr "Μαρία Παπαδοπούλου"
+
+#: includes/class-tet-notify-order-data.php:96
+msgid "Athens"
+msgstr "Αθήνα"
+
+#: includes/class-tet-notify-order-data.php:97
+msgid "Greece"
+msgstr "Ελλάδα"
+
+#. translators: {order_number} is a template tag, keep it as is.
+#: includes/class-tet-notify-settings.php:56
+msgid "New order #{order_number}"
+msgstr "Νέα παραγγελία #{order_number}"
+
+#: includes/class-tet-notify-settings.php:65
+msgid "You have a new online order"
+msgstr "Έχετε νέα online παραγγελία"
+
+#: includes/class-tet-notify-settings.php:180
+msgid "Sending…"
+msgstr "Αποστολή…"
+
+#: includes/class-tet-notify-settings.php:181
+msgid "Sent. Check the channel."
+msgstr "Στάλθηκε. Ελέγξτε το κανάλι."
+
+#: includes/class-tet-notify-settings.php:182
+msgid "Failed:"
+msgstr "Απέτυχε:"
+
+#: includes/class-tet-notify-settings.php:183
+msgid "Choose a sound file"
+msgstr "Επιλέξτε αρχείο ήχου"
+
+#: includes/class-tet-notify-settings.php:184
+msgid "Use this sound"
+msgstr "Χρήση αυτού του ήχου"
+
+#: includes/class-tet-notify-settings.php:204
+msgid "Settings saved."
+msgstr "Οι ρυθμίσεις αποθηκεύτηκαν."
+
+#: includes/class-tet-notify-settings.php:208
+msgid "Channels"
+msgstr "Κανάλια"
+
+#: includes/class-tet-notify-settings.php:209 includes/class-tet-notify-settings.php:469
+msgid "Message"
+msgstr "Μήνυμα"
+
+#: includes/class-tet-notify-settings.php:210
+msgid "Admin alerts"
+msgstr "Ειδοποιήσεις στο διαχειριστικό"
+
+#: includes/class-tet-notify-settings.php:240
+msgid "Save settings"
+msgstr "Αποθήκευση ρυθμίσεων"
+
+#: includes/class-tet-notify-settings.php:266
+msgid "Template tags"
+msgstr "Ετικέτες προτύπου"
+
+#: includes/class-tet-notify-settings.php:271
+msgid "Lines left empty by a tag (e.g. no customer note) are removed. A link to the order is added to every message."
+msgstr "Οι γραμμές που μένουν κενές από μια ετικέτα (π.χ. χωρίς σημείωση πελάτη) αφαιρούνται. Σε κάθε μήνυμα προστίθεται σύνδεσμος προς την παραγγελία."
+
+#: includes/class-tet-notify-settings.php:272
+msgid "Customer details in the message (name, email, phone) are sent to the service of each channel. Include only what you need."
+msgstr "Τα στοιχεία του πελάτη στο μήνυμα (όνομα, email, τηλέφωνο) στέλνονται στην υπηρεσία κάθε καναλιού. Βάλτε μόνο όσα χρειάζεστε."
+
+#: includes/class-tet-notify-settings.php:292
+msgid "Each new order is sent to every channel you enable here. Messages are sent in the background, so a slow service never delays the checkout."
+msgstr "Κάθε νέα παραγγελία στέλνεται σε όλα τα κανάλια που ενεργοποιείτε εδώ. Τα μηνύματα στέλνονται στο παρασκήνιο, οπότε μια αργή υπηρεσία δεν καθυστερεί ποτέ το checkout."
+
+#: includes/class-tet-notify-settings.php:301
+msgid "Create a bot with @BotFather and copy its token. Send the bot a message (or add it to a group), then open https://api.telegram.org/bot<token>/getUpdates to find the chat ID."
+msgstr "Δημιουργήστε ένα bot με το @BotFather και αντιγράψτε το token του. Στείλτε ένα μήνυμα στο bot (ή προσθέστε το σε μια ομάδα) και ανοίξτε το https://api.telegram.org/bot<token>/getUpdates για να βρείτε το chat ID."
+
+#: includes/class-tet-notify-settings.php:304 includes/class-tet-notify-settings.php:335 includes/class-tet-notify-settings.php:360 includes/class-tet-notify-settings.php:385 includes/class-tet-notify-settings.php:409 includes/class-tet-notify-settings.php:507
+msgid "Enable"
+msgstr "Ενεργοποίηση"
+
+#: includes/class-tet-notify-settings.php:305
+msgid "Send new orders to Telegram"
+msgstr "Αποστολή νέων παραγγελιών στο Telegram"
+
+#: includes/class-tet-notify-settings.php:311
+msgid "Bot token"
+msgstr "Token του bot"
+
+#: includes/class-tet-notify-settings.php:318
+msgid "Chat IDs"
+msgstr "Chat IDs"
+
+#: includes/class-tet-notify-settings.php:319
+msgid "One or more, separated by commas. Groups start with a minus sign; public channels can use @name."
+msgstr "Ένα ή περισσότερα, χωρισμένα με κόμμα. Οι ομάδες ξεκινούν με μείον· τα δημόσια κανάλια μπορούν να γραφτούν ως @όνομα."
+
+#: includes/class-tet-notify-settings.php:332
+msgid "In Slack, create an app with an Incoming Webhook for the channel you want and paste its URL."
+msgstr "Στο Slack, δημιουργήστε μια εφαρμογή με Incoming Webhook για το κανάλι που θέλετε και επικολλήστε το URL της."
+
+#: includes/class-tet-notify-settings.php:336
+msgid "Send new orders to Slack"
+msgstr "Αποστολή νέων παραγγελιών στο Slack"
+
+#: includes/class-tet-notify-settings.php:342 includes/class-tet-notify-settings.php:367
+msgid "Webhook URL"
+msgstr "Webhook URL"
+
+#: includes/class-tet-notify-settings.php:357
+msgid "In Discord: channel settings → Integrations → Webhooks → New webhook → Copy webhook URL."
+msgstr "Στο Discord: ρυθμίσεις καναλιού → Integrations → Webhooks → New webhook → Copy webhook URL."
+
+#: includes/class-tet-notify-settings.php:361
+msgid "Send new orders to Discord"
+msgstr "Αποστολή νέων παραγγελιών στο Discord"
+
+#: includes/class-tet-notify-settings.php:382
+msgid "A short plain-text email to extra addresses, e.g. the warehouse. WooCommerce's own \"New order\" email is not affected."
+msgstr "Ένα σύντομο email απλού κειμένου σε επιπλέον διευθύνσεις, π.χ. στην αποθήκη. Το email «Νέα παραγγελία» του ίδιου του WooCommerce δεν επηρεάζεται."
+
+#: includes/class-tet-notify-settings.php:386
+msgid "Send new orders by email"
+msgstr "Αποστολή νέων παραγγελιών με email"
+
+#: includes/class-tet-notify-settings.php:392
+msgid "Recipients"
+msgstr "Παραλήπτες"
+
+#: includes/class-tet-notify-settings.php:393
+msgid "Separate addresses with commas."
+msgstr "Χωρίστε τις διευθύνσεις με κόμμα."
+
+#: includes/class-tet-notify-settings.php:406
+msgid "Sends the order as JSON (POST) to any URL, e.g. n8n, Make or Zapier. The payload includes the customer's email and phone."
+msgstr "Στέλνει την παραγγελία ως JSON (POST) σε οποιοδήποτε URL, π.χ. n8n, Make ή Zapier. Περιλαμβάνει το email και το τηλέφωνο του πελάτη."
+
+#: includes/class-tet-notify-settings.php:410
+msgid "Send new orders to a webhook"
+msgstr "Αποστολή νέων παραγγελιών σε webhook"
+
+#: includes/class-tet-notify-settings.php:416
+msgid "URL"
+msgstr "URL"
+
+#: includes/class-tet-notify-settings.php:423
+msgid "Secret"
+msgstr "Μυστικό κλειδί"
+
+#: includes/class-tet-notify-settings.php:424
+msgid "Optional. Each request then carries an X-Tet-Signature header: sha256= and the HMAC-SHA256 of the body with this secret."
+msgstr "Προαιρετικό. Κάθε αίτημα τότε έχει την κεφαλίδα X-Tet-Signature: sha256= και το HMAC-SHA256 του σώματος με αυτό το κλειδί."
+
+#: includes/class-tet-notify-settings.php:438
+msgid "When to notify"
+msgstr "Πότε γίνεται ειδοποίηση"
+
+#: includes/class-tet-notify-settings.php:441
+msgid "An order is announced once, the first time it reaches one of these statuses. Orders awaiting payment (e.g. a card payment that was not completed) are not announced."
+msgstr "Κάθε παραγγελία ανακοινώνεται μία φορά, την πρώτη φορά που φτάνει σε μία από αυτές τις καταστάσεις. Οι παραγγελίες που περιμένουν πληρωμή (π.χ. πληρωμή με κάρτα που δεν ολοκληρώθηκε) δεν ανακοινώνονται."
+
+#: includes/class-tet-notify-settings.php:444
+msgid "Order statuses"
+msgstr "Καταστάσεις παραγγελίας"
+
+#: includes/class-tet-notify-settings.php:453
+msgid "Orders created in the admin"
+msgstr "Παραγγελίες από το διαχειριστικό"
+
+#: includes/class-tet-notify-settings.php:454
+msgid "Also announce orders created by hand in the admin (e.g. phone orders)"
+msgstr "Ανακοίνωση και των παραγγελιών που δημιουργούνται χειροκίνητα στο διαχειριστικό (π.χ. τηλεφωνικές)"
+
+#: includes/class-tet-notify-settings.php:460
+msgid "Debug log"
+msgstr "Αρχείο καταγραφής"
+
+#: includes/class-tet-notify-settings.php:461
+msgid "Log every message sent (WooCommerce → Status → Logs, source tet-order-notifications). Failures are always logged."
+msgstr "Καταγραφή κάθε μηνύματος που στέλνεται (WooCommerce → Κατάσταση → Αρχεία καταγραφής, πηγή tet-order-notifications). Οι αποτυχίες καταγράφονται πάντα."
+
+#: includes/class-tet-notify-settings.php:472
+msgid "Used by Telegram, Slack, Discord and email. Leave empty for the default text."
+msgstr "Χρησιμοποιείται από Telegram, Slack, Discord και email. Αφήστε κενό για το προεπιλεγμένο κείμενο."
+
+#: includes/class-tet-notify-settings.php:475
+msgid "Title"
+msgstr "Τίτλος"
+
+#: includes/class-tet-notify-settings.php:476
+msgid "Bold first line; the email subject."
+msgstr "Η πρώτη γραμμή με έντονα· το θέμα του email."
+
+#: includes/class-tet-notify-settings.php:483
+msgid "Body"
+msgstr "Κείμενο"
+
+#: includes/class-tet-notify-settings.php:501
+msgid "Alerts in the admin"
+msgstr "Ειδοποιήσεις στο διαχειριστικό"
+
+#: includes/class-tet-notify-settings.php:504
+msgid "While someone is logged in to the admin, a new order shows a pop-up on every admin page and plays a sound. Each user can mute it from the bell in the admin bar."
+msgstr "Όσο κάποιος είναι συνδεδεμένος στο διαχειριστικό, μια νέα παραγγελία εμφανίζει αναδυόμενο παράθυρο σε κάθε σελίδα του και παίζει ήχο. Κάθε χρήστης μπορεί να κάνει σίγαση από το καμπανάκι στη γραμμή διαχείρισης."
+
+#: includes/class-tet-notify-settings.php:508
+msgid "Show new orders in the admin as they arrive"
+msgstr "Εμφάνιση των νέων παραγγελιών στο διαχειριστικό τη στιγμή που έρχονται"
+
+#: includes/class-tet-notify-settings.php:514
+msgid "User roles"
+msgstr "Ρόλοι χρηστών"
+
+#: includes/class-tet-notify-settings.php:515
+msgid "Users with these roles get the alerts. They also need permission to edit orders."
+msgstr "Οι χρήστες με αυτούς τους ρόλους βλέπουν τις ειδοποιήσεις. Χρειάζονται επίσης δικαίωμα επεξεργασίας παραγγελιών."
+
+#: includes/class-tet-notify-settings.php:524
+msgid "Check every"
+msgstr "Έλεγχος κάθε"
+
+#: includes/class-tet-notify-settings.php:525
+msgid "seconds (10–120). In a background browser tab, browsers may check only once a minute."
+msgstr "δευτερόλεπτα (10–120). Σε καρτέλα στο παρασκήνιο, οι browsers μπορεί να ελέγχουν μόνο μία φορά το λεπτό."
+
+#: includes/class-tet-notify-settings.php:533
+msgid "Desktop notifications"
+msgstr "Ειδοποιήσεις υπολογιστή"
+
+#: includes/class-tet-notify-settings.php:534
+msgid "Also show a system notification when the admin tab is in the background (each browser asks for permission once)"
+msgstr "Εμφάνιση και ειδοποίησης συστήματος όταν η καρτέλα του διαχειριστικού είναι στο παρασκήνιο (κάθε browser ζητά άδεια μία φορά)"
+
+#: includes/class-tet-notify-settings.php:542 includes/class-tet-notify-settings.php:548
+msgid "Sound"
+msgstr "Ήχος"
+
+#: includes/class-tet-notify-settings.php:545
+msgid "Browsers only play sound after you click somewhere on the page. Until then the bell in the admin bar shows \"Click to enable sound\"."
+msgstr "Οι browsers παίζουν ήχο μόνο αφού κάνετε κλικ κάπου στη σελίδα. Μέχρι τότε το καμπανάκι στη γραμμή διαχείρισης γράφει «Κάντε κλικ για ενεργοποίηση ήχου»."
+
+#: includes/class-tet-notify-settings.php:553
+msgid "Chime and spoken message"
+msgstr "Κουδούνισμα και φωνητικό μήνυμα"
+
+#: includes/class-tet-notify-settings.php:554
+msgid "Chime"
+msgstr "Κουδούνισμα"
+
+#: includes/class-tet-notify-settings.php:555
+msgid "My own sound file"
+msgstr "Δικό μου αρχείο ήχου"
+
+#: includes/class-tet-notify-settings.php:556
+msgid "No sound"
+msgstr "Χωρίς ήχο"
+
+#: includes/class-tet-notify-settings.php:560
+msgid "Spoken message"
+msgstr "Φωνητικό μήνυμα"
+
+#: includes/class-tet-notify-settings.php:561
+msgid "Read by the browser's voice for the admin language. If the computer has no voice for that language, only the chime plays."
+msgstr "Το διαβάζει η φωνή του browser για τη γλώσσα του διαχειριστικού. Αν ο υπολογιστής δεν έχει φωνή για αυτή τη γλώσσα, παίζει μόνο το κουδούνισμα."
+
+#: includes/class-tet-notify-settings.php:568
+msgid "Sound file"
+msgstr "Αρχείο ήχου"
+
+#: includes/class-tet-notify-settings.php:569
+msgid "An MP3, OGG or WAV from the media library, e.g. your own recording."
+msgstr "Ένα MP3, OGG ή WAV από τη βιβλιοθήκη πολυμέσων, π.χ. δική σας ηχογράφηση."
+
+#: includes/class-tet-notify-settings.php:574
+msgid "Repeat"
+msgstr "Επανάληψη"
+
+#: includes/class-tet-notify-settings.php:575
+msgid "Repeat the sound every 30 seconds until the pop-up is closed"
+msgstr "Επανάληψη του ήχου κάθε 30 δευτερόλεπτα μέχρι να κλείσει το αναδυόμενο παράθυρο"
+
+#: includes/class-tet-notify-settings.php:591
+msgid "Send test message"
+msgstr "Αποστολή δοκιμαστικού μηνύματος"
+
+#: includes/class-tet-notify-settings.php:593
+msgid "Uses the values above, even before you save, and your latest order (or sample data)."
+msgstr "Χρησιμοποιεί τις τιμές παραπάνω, ακόμα και πριν την αποθήκευση, και την τελευταία σας παραγγελία (ή δοκιμαστικά δεδομένα)."
+
+#: includes/class-tet-notify-settings.php:606
+msgid "Choose file"
+msgstr "Επιλογή αρχείου"
+
+#: includes/class-tet-notify-settings.php:607
+msgid "Play"
+msgstr "Αναπαραγωγή"
+
+#: includes/class-tet-notify-settings.php:619
+msgid "Not allowed."
+msgstr "Δεν επιτρέπεται."
+
+#: woo-tet-order-notifications.php:42
+msgid "Order Notifications for WooCommerce requires WooCommerce to be installed and active."
+msgstr "Το Order Notifications for WooCommerce χρειάζεται εγκατεστημένο και ενεργό WooCommerce."
