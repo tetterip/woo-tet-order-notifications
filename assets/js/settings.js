@@ -60,3 +60,16 @@
 		}
 	} );
 } )( jQuery );
+
+/* Channels tab: the card's badge follows its Enable checkbox before saving. */
+( function ( $ ) {
+	'use strict';
+	var cfg = window.tetNotifySettings;
+	$( document ).on( 'change', '.tet-notify-channel input[type="checkbox"][id$="_enabled"]', function () {
+		var $badge = $( this ).closest( '.tet-notify-channel' ).find( '.tet-notify-channel-badge' );
+		$badge
+			.removeClass( 'ttrp-badge--success ttrp-badge--warning ttrp-badge--neutral' )
+			.addClass( this.checked ? 'ttrp-badge--success' : 'ttrp-badge--neutral' )
+			.text( this.checked ? cfg.i18n.on : cfg.i18n.off );
+	} );
+} )( jQuery );

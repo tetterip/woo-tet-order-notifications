@@ -11,7 +11,7 @@ class Tet_Notify_Settings {
 	// Plugin title in admin is never translated (suite-wide uniformity rule).
 	const PLUGIN_TITLE = 'Order Notifications';
 	const PAGE_SLUG    = 'ttrp-order-notifications';
-	const TABS         = [ 'channels', 'message', 'alerts' ];
+	const TABS         = [ 'alerts', 'channels', 'message' ];
 
 	/** Screen id of the settings page, set once the submenu is registered. */
 	private static string $page_hook = '';
@@ -96,7 +96,7 @@ class Tet_Notify_Settings {
 
 	/* ── Menu (shared ttrp.gr pattern) ──────────────────────── */
 
-	public static function url( string $tab = 'channels' ): string {
+	public static function url( string $tab = 'alerts' ): string {
 		return admin_url( 'admin.php?page=' . self::PAGE_SLUG . '&tab=' . $tab );
 	}
 
@@ -178,6 +178,8 @@ class Tet_Notify_Settings {
 			'nonce'   => wp_create_nonce( 'tet_notify_test' ),
 			'i18n'    => [
 				'sending'     => __( 'Sending…', 'tet-order-notifications' ),
+				'on'          => __( 'On', 'tet-order-notifications' ),
+				'off'         => __( 'Off', 'tet-order-notifications' ),
 				'sent'        => __( 'Sent. Check the channel.', 'tet-order-notifications' ),
 				'failed'      => __( 'Failed:', 'tet-order-notifications' ),
 				'chooseSound' => __( 'Choose a sound file', 'tet-order-notifications' ),
@@ -187,8 +189,8 @@ class Tet_Notify_Settings {
 	}
 
 	private static function current_tab(): string {
-		$tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : 'channels'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		return in_array( $tab, self::TABS, true ) ? $tab : 'channels';
+		$tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : 'alerts'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		return in_array( $tab, self::TABS, true ) ? $tab : 'alerts';
 	}
 
 	/* ── Page ───────────────────────────────────────────────── */
@@ -205,9 +207,9 @@ class Tet_Notify_Settings {
 		}
 
 		$tabs = [
+			'alerts'   => __( 'Admin alerts', 'tet-order-notifications' ),
 			'channels' => __( 'Channels', 'tet-order-notifications' ),
 			'message'  => __( 'Message', 'tet-order-notifications' ),
-			'alerts'   => __( 'Admin alerts', 'tet-order-notifications' ),
 		];
 		?>
 		<div class="wrap woocommerce ttrp-wrap">
@@ -215,12 +217,6 @@ class Tet_Notify_Settings {
 				<h1><?php echo esc_html( self::PLUGIN_TITLE ); ?></h1>
 				<span class="ttrp-plugin-version">v<?php echo esc_html( TET_NOTIFY_VERSION ); ?></span>
 			</div>
-
-			<?php
-			if ( 'channels' === $tab ) {
-				self::render_config_warnings();
-			}
-			?>
 
 			<nav class="nav-tab-wrapper woo-nav-tab-wrapper">
 				<?php foreach ( $tabs as $key => $label ) : ?>
@@ -231,7 +227,11 @@ class Tet_Notify_Settings {
 			<form method="post" id="tet-notify-form">
 				<?php
 				wp_nonce_field( 'tet_notify_save_' . $tab );
-				woocommerce_admin_fields( self::fields( $tab ) );
+				if ( 'channels' === $tab ) {
+					self::render_channels();
+				} else {
+					woocommerce_admin_fields( self::fields( $tab ) );
+				}
 				if ( 'message' === $tab ) {
 					self::render_tag_list();
 				}
@@ -249,17 +249,69 @@ class Tet_Notify_Settings {
 		<?php
 	}
 
-	/** Enabled channels whose settings can't work (bad token, wrong webhook URL…). */
-	private static function render_config_warnings(): void {
-		foreach ( Tet_Notify_Channels::labels() as $id => $label ) {
-			if ( ! Tet_Notify_Channels::is_enabled( $id ) ) {
-				continue;
+	/** Short line under each channel's name in the Channels tab. */
+	private static function channel_summaries(): array {
+		return [
+			'telegram' => __( 'Message to a chat, group or channel', 'tet-order-notifications' ),
+			'slack'    => __( 'Message to a Slack channel', 'tet-order-notifications' ),
+			'discord'  => __( 'Message to a Discord channel', 'tet-order-notifications' ),
+			'email'    => __( 'Short email to extra addresses', 'tet-order-notifications' ),
+			'webhook'  => __( 'JSON to n8n, Make, Zapier or your own app', 'tet-order-notifications' ),
+		];
+	}
+
+	/**
+	 * Channels tab: the intro, then one collapsible card per channel (native
+	 * <details>, so it works without JS and closed cards still submit their fields).
+	 * A card opens on its own when the channel is on but its settings can't work.
+	 */
+	private static function render_channels(): void {
+		$groups    = [];
+		$current   = 'intro';
+		foreach ( self::channel_fields() as $field ) {
+			if ( 'title' === $field['type'] && 0 === strpos( $field['id'], 'tet_notify_' ) ) {
+				$key = substr( $field['id'], strlen( 'tet_notify_' ) );
+				if ( isset( Tet_Notify_Channels::labels()[ $key ] ) ) {
+					$current = $key;
+					unset( $field['title'] ); // Shown in the card header instead.
+				}
 			}
-			$error = Tet_Notify_Channels::config_error( $id, Tet_Notify_Channels::config( $id ) );
-			if ( $error ) {
-				echo '<div class="ttrp-notice ttrp-notice--warning"><p><strong>' . esc_html( $label ) . ':</strong> ' . esc_html( $error ) . '</p></div>';
-			}
+			$groups[ $current ][] = $field;
 		}
+
+		woocommerce_admin_fields( $groups['intro'] );
+
+		$summaries = self::channel_summaries();
+		echo '<div class="tet-notify-channels">';
+		foreach ( Tet_Notify_Channels::labels() as $id => $label ) {
+			$enabled = Tet_Notify_Channels::is_enabled( $id );
+			$error   = $enabled ? Tet_Notify_Channels::config_error( $id, Tet_Notify_Channels::config( $id ) ) : '';
+			if ( ! $enabled ) {
+				$badge = [ 'neutral', __( 'Off', 'tet-order-notifications' ) ];
+			} elseif ( $error ) {
+				$badge = [ 'warning', __( 'Needs setup', 'tet-order-notifications' ) ];
+			} else {
+				$badge = [ 'success', __( 'On', 'tet-order-notifications' ) ];
+			}
+			?>
+			<details class="tet-notify-channel" data-channel="<?php echo esc_attr( $id ); ?>"<?php echo $error ? ' open' : ''; ?>>
+				<summary>
+					<span class="tet-notify-channel-name"><?php echo esc_html( $label ); ?></span>
+					<span class="tet-notify-channel-summary"><?php echo esc_html( $summaries[ $id ] ?? '' ); ?></span>
+					<span class="ttrp-badge ttrp-badge--<?php echo esc_attr( $badge[0] ); ?> tet-notify-channel-badge"><?php echo esc_html( $badge[1] ); ?></span>
+				</summary>
+				<div class="tet-notify-channel-body">
+					<?php
+					if ( $error ) {
+						echo '<div class="ttrp-notice ttrp-notice--warning"><p>' . esc_html( $error ) . '</p></div>';
+					}
+					woocommerce_admin_fields( $groups[ $id ] ?? [] );
+					?>
+				</div>
+			</details>
+			<?php
+		}
+		echo '</div>';
 	}
 
 	private static function render_tag_list(): void {

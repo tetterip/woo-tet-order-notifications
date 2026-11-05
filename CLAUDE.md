@@ -20,7 +20,7 @@ includes/
   class-tet-notify-events.php          Table {prefix}tet_notify_events: atomic "announce once" + cursor for the admin alerts
   class-tet-notify-dispatcher.php      Status hooks → should_notify → claim → Action Scheduler job → channels
   class-tet-notify-live.php            Admin alerts: REST endpoint, script data, admin bar bell, mute + nonce AJAX
-  class-tet-notify-settings.php        ttrp.gr Plugins → Order Notifications (tabs: channels / message / alerts), option getters, test AJAX
+  class-tet-notify-settings.php        ttrp.gr Plugins → Order Notifications (tabs: alerts / channels / message; channels as collapsible cards), option getters, test AJAX
 assets/
   js/live.js                           Admin alerts (plain JS): polling, pop-ups, WebAudio chime, speechSynthesis, desktop notifications, bell
   js/settings.js                       "Send test message" + media picker (jQuery)
@@ -116,7 +116,7 @@ User meta `tet_notify_muted` (yes/no). Order meta `_tet_notify_sent` (timestamp)
 
 ## Manual testing checklist
 
-- [ ] Activate → table `tet_notify_events` exists; settings page has three tabs; `desc_tip` icons show text
+- [ ] Activate → table `tet_notify_events` exists; settings open on Admin alerts; channel cards open/close, badge follows Enable; `desc_tip` icons show text
 - [ ] Each channel's "Send test message" with real credentials (Telegram group + private chat, Slack, Discord, email, webhook.site)
 - [ ] Wrong token / URL → clear error under the button and a warning on the Channels tab
 - [ ] Classic and block checkout with COD → one message per channel, one admin pop-up; bank transfer (on-hold) too

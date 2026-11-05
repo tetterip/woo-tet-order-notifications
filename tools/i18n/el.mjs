@@ -48,6 +48,14 @@ export default {
   'You have a new online order': 'Έχετε νέα online παραγγελία',
 
   // Settings page.
+  'Message to a chat, group or channel': 'Μήνυμα σε chat, ομάδα ή κανάλι',
+  'Message to a Slack channel': 'Μήνυμα σε κανάλι του Slack',
+  'Message to a Discord channel': 'Μήνυμα σε κανάλι του Discord',
+  'Short email to extra addresses': 'Σύντομο email σε επιπλέον διευθύνσεις',
+  'JSON to n8n, Make, Zapier or your own app': 'JSON σε n8n, Make, Zapier ή δική σας εφαρμογή',
+  'Off': 'Ανενεργό',
+  'Needs setup': 'Θέλει ρύθμιση',
+  'On': 'Ενεργό',
   'Sending…': 'Αποστολή…',
   'Sent. Check the channel.': 'Στάλθηκε. Ελέγξτε το κανάλι.',
   'Failed:': 'Απέτυχε:',
