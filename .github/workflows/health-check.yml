@@ -1,4 +1,4 @@
-# Security + compatibility health check for a ttrp.gr WooCommerce plugin.
+# Security + compatibility + performance health check for a ttrp.gr WooCommerce plugin.
 # Source of truth: plugins.ttrp.gr-autoupdater/client/health-check.yml (synced by client/sync-health-check.sh).
 # Runs on the 1st and 16th of every month, on pushes to the default branch and by hand.
 # Results go to one GitHub issue labelled "health-check" (updated each run, closed when clean).
@@ -25,7 +25,7 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Read plugin header
         id: header
@@ -67,7 +67,7 @@ jobs:
             squizlabs/php_codesniffer:^3.13 wp-coding-standards/wpcs:^3 \
             "phpcompatibility/phpcompatibility-wp:^3.0@alpha" "phpcompatibility/php-compatibility:^10.0@alpha"
 
-      - name: PHPCS (security + PHP compatibility)
+      - name: PHPCS (security, PHP compatibility, performance)
         run: |
           cat > "$RUNNER_TEMP/ruleset.xml" <<'EOF'
           <?xml version="1.0"?>
@@ -96,6 +96,11 @@ jobs:
               </properties>
             </rule>
             <rule ref="Squiz.PHP.Eval"/>
+            <!-- Performance / scalability: slow meta/tax queries, unbounded queries, uncached direct DB calls, unversioned assets. -->
+            <rule ref="WordPress.DB.SlowDBQuery"/>
+            <rule ref="WordPress.WP.PostsPerPage"/>
+            <rule ref="WordPress.DB.DirectDatabaseQuery.NoCaching"/>
+            <rule ref="WordPress.WP.EnqueuedResourceParameters"/>
           </ruleset>
           EOF
           "$RUNNER_TEMP/phpcs/vendor/bin/phpcs" -q --standard="$RUNNER_TEMP/ruleset.xml" \
@@ -146,7 +151,7 @@ jobs:
             list( $name, $have, $latest, $hdr ) = $c;
             if ( '' === $latest ) { $state = '⚠️ could not fetch the latest version'; }
             elseif ( '' === $have ) { $state = "❌ no `$hdr` header"; $problems++; }
-            elseif ( version_compare( $mm( $have ), $mm( $latest ), '<' ) ) { $state = "❌ behind: test, then bump `$hdr` to " . $mm( $latest ) . '"; $problems++; }
+            elseif ( version_compare( $mm( $have ), $mm( $latest ), '<' ) ) { $state = "❌ behind: test, then bump `$hdr` to " . $mm( $latest ); $problems++; }
             else { $state = '✅'; }
             $rows[] = "| $name | `$hdr: " . ( '' === $have ? '—' : $have ) . "` | " . ( '' === $latest ? '?' : $latest ) . " | $state |";
           }
@@ -162,18 +167,22 @@ jobs:
 
           // PHPCS.
           $j = json_decode( $rd( 'phpcs.json' ), true );
-          $groups = array( 'compat' => array(), 'security' => array(), 'deprecated' => array() );
+          $groups = array( 'compat' => array(), 'security' => array(), 'deprecated' => array(), 'performance' => array() );
+          $perf   = '/^WordPress\.(DB\.SlowDBQuery|WP\.PostsPerPage|DB\.DirectDatabaseQuery|WP\.EnqueuedResourceParameters)/';
           if ( ! is_array( $j ) ) {
             $rows[] = '| PHPCS | | | ⚠️ did not run (see the workflow log) |';
           } else {
             foreach ( $j['files'] as $file => $d ) {
               foreach ( $d['messages'] as $m ) {
                 $src = $m['source'];
-                $g   = 0 === strpos( $src, 'PHPCompatibility' ) ? 'compat' : ( false !== strpos( $src, 'Deprecated' ) ? 'deprecated' : 'security' );
+                if ( 0 === strpos( $src, 'PHPCompatibility' ) ) { $g = 'compat'; }
+                elseif ( preg_match( $perf, $src ) ) { $g = 'performance'; }
+                elseif ( false !== strpos( $src, 'Deprecated' ) ) { $g = 'deprecated'; }
+                else { $g = 'security'; }
                 $groups[ $g ][] = '| `' . $esc( ltrim( $file, './' ) ) . ':' . $m['line'] . '` | ' . ( 'ERROR' === $m['type'] ? 'error' : 'warning' ) . ' | ' . $esc( $m['message'] ) . ' | `' . $src . '` |';
               }
             }
-            $labels = array( 'compat' => 'PHP compatibility (' . getenv( 'MIN_PHP' ) . '+)', 'security' => 'Security (WPCS)', 'deprecated' => 'Deprecated WordPress APIs' );
+            $labels = array( 'compat' => 'PHP compatibility (' . getenv( 'MIN_PHP' ) . '+)', 'security' => 'Security (WPCS)', 'deprecated' => 'Deprecated WordPress APIs', 'performance' => 'Performance / scalability' );
             foreach ( $groups as $g => $list ) {
               $problems += count( $list );
               $rows[] = '| ' . $labels[ $g ] . ' | | | ' . ( $list ? '❌ ' . count( $list ) . ' findings' : '✅' ) . ' |';
@@ -183,7 +192,7 @@ jobs:
           $body  = "<!-- ttrp-health-check -->\nAutomatic check of **v" . getenv( 'VERSION' ) . '** on ' . gmdate( 'Y-m-d' ) . ' ([run](' . getenv( 'RUN_URL' ) . "))\n\n";
           $body .= "| Check | Plugin | Latest | Result |\n|---|---|---|---|\n" . implode( "\n", $rows ) . "\n";
           if ( $lint ) { $body .= "\n" . implode( "\n\n", $lint ) . "\n"; }
-          foreach ( array( 'compat' => 'PHP compatibility', 'deprecated' => 'Deprecated WordPress APIs', 'security' => 'Security' ) as $g => $title ) {
+          foreach ( array( 'compat' => 'PHP compatibility', 'deprecated' => 'Deprecated WordPress APIs', 'security' => 'Security', 'performance' => 'Performance / scalability' ) as $g => $title ) {
             if ( empty( $groups[ $g ] ) ) { continue; }
             $body .= "\n<details><summary><b>$title</b> (" . count( $groups[ $g ] ) . ")</summary>\n\n| Where | Type | Message | Sniff |\n|---|---|---|---|\n" . implode( "\n", $groups[ $g ] ) . "\n\n</details>\n";
           }
@@ -193,7 +202,8 @@ jobs:
           file_put_contents( getenv( 'GITHUB_OUTPUT' ), "problems=$problems\n", FILE_APPEND );
           echo $body;
           EOF
-          php "$T/report.php" | tee -a "$GITHUB_STEP_SUMMARY"
+          php "$T/report.php" > "$T/report.out"
+          cat "$T/report.out" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Update the health-check issue
         if: github.event_name != 'pull_request'
@@ -201,12 +211,12 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           PROBLEMS: ${{ steps.report.outputs.problems }}
         run: |
-          gh label create health-check --color D93F0B --description "Automatic security and compatibility check" --force >/dev/null
+          gh label create health-check --color D93F0B --description "Automatic security, compatibility and performance check" --force >/dev/null
           num=$(gh issue list --label health-check --state open --json number --jq '.[0].number // empty')
           if [ "$PROBLEMS" = "0" ]; then
             if [ -n "$num" ]; then gh issue close "$num" --comment "All checks pass ($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID)."; fi
           elif [ -n "$num" ]; then
             gh issue edit "$num" --body-file "$RUNNER_TEMP/report.md"
           else
-            gh issue create --title "Health check: security & compatibility" --label health-check --body-file "$RUNNER_TEMP/report.md"
+            gh issue create --title "Health check: security, compatibility & performance" --label health-check --body-file "$RUNNER_TEMP/report.md"
           fi
