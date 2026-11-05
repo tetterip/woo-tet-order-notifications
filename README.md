@@ -1,10 +1,10 @@
 # Order Notifications for WooCommerce
 
-Get told about every new order the moment it arrives: on Telegram, Slack, Discord, by email or through a webhook, and with a pop-up and sound inside the WordPress admin. HPOS and block checkout compatible.
+Get told about every new order the moment it arrives: on Telegram, Slack, Discord or through a webhook, and with a pop-up and sound inside the WordPress admin. HPOS and block checkout compatible.
 
 ## Features
 
-- **Channels**: Telegram (bot, one or more chats or groups), Slack (incoming webhook), Discord (webhook), email to extra addresses, and a generic JSON webhook for n8n, Make, Zapier and the like (optional `X-Tet-Signature` HMAC header).
+- **Channels**: Telegram (bot, one or more chats or groups), Slack (incoming webhook), Discord (webhook) and a generic JSON webhook for n8n, Make, Zapier and the like (optional `X-Tet-Signature` HMAC header).
 - **Sent straight from your site** to each service. No third-party relay; nothing is stored anywhere else.
 - **Background sending** (Action Scheduler): a slow or unreachable service never delays the checkout. Failures are logged and noted on the order.
 - **Once per order**, the first time it reaches a status you choose (default Processing and On hold). Card payments that were never completed are not announced.
@@ -38,8 +38,7 @@ never be missed, also enable Telegram (or another channel) on your phone.
 
 ## Privacy
 
-Messages go directly from your site to the services you enable (Telegram, Slack, Discord, your mail server, your
-webhook URL). Whatever the message template includes is sent to them; the default includes the customer's name and city
+Messages go directly from your site to the services you enable (Telegram, Slack, Discord, your webhook URL). Whatever the message template includes is sent to them; the default includes the customer's name and city
 but not their email or phone. The webhook payload includes the email and phone. Mention the services you use in your
 privacy policy.
 

@@ -290,14 +290,6 @@ class Tet_Notify_Settings {
 					],
 					'note'  => __( 'You need the "Manage Webhooks" permission on the server.', 'tet-order-notifications' ),
 				];
-			case 'email':
-				return [
-					'steps' => [
-						__( 'Enter one or more addresses, separated by commas (e.g. the warehouse or a partner).', 'tet-order-notifications' ),
-						__( 'Tick <strong>Enable</strong>, save, and press <strong>Send test message</strong>.', 'tet-order-notifications' ),
-					],
-					'note'  => __( 'A short plain-text email, sent with your site\'s mail settings. WooCommerce\'s own "New order" email is not affected. If the test doesn\'t arrive, check the spam folder; sites without proper mail settings need an SMTP plugin.', 'tet-order-notifications' ),
-				];
 			case 'webhook':
 				return [
 					'steps' => [
@@ -347,7 +339,6 @@ class Tet_Notify_Settings {
 			'telegram' => __( 'Message to a chat, group or channel', 'tet-order-notifications' ),
 			'slack'    => __( 'Message to a Slack channel', 'tet-order-notifications' ),
 			'discord'  => __( 'Message to a Discord channel', 'tet-order-notifications' ),
-			'email'    => __( 'Short email to extra addresses', 'tet-order-notifications' ),
 			'webhook'  => __( 'JSON to n8n, Make, Zapier or your own app', 'tet-order-notifications' ),
 		];
 	}
@@ -516,29 +507,6 @@ class Tet_Notify_Settings {
 			[ 'type' => 'tet_notify_test', 'id' => 'tet_notify_discord_test', 'channel' => 'discord', 'is_option' => false ],
 			[ 'type' => 'sectionend', 'id' => 'tet_notify_discord' ],
 
-			// Email.
-			[
-				'title' => __( 'Email', 'tet-order-notifications' ),
-				'type'  => 'title',
-				'id'    => 'tet_notify_email',
-			],
-			[
-				'title'   => __( 'Enable', 'tet-order-notifications' ),
-				'desc'    => __( 'Send new orders by email', 'tet-order-notifications' ),
-				'id'      => 'tet_notify_email_enabled',
-				'type'    => 'checkbox',
-				'default' => 'no',
-			],
-			[
-				'title' => __( 'Recipients', 'tet-order-notifications' ),
-				'desc'  => __( 'Separate addresses with commas.', 'tet-order-notifications' ),
-				'id'    => 'tet_notify_email_recipients',
-				'type'  => 'text',
-				'css'   => 'min-width:400px;',
-			],
-			[ 'type' => 'tet_notify_test', 'id' => 'tet_notify_email_test', 'channel' => 'email', 'is_option' => false ],
-			[ 'type' => 'sectionend', 'id' => 'tet_notify_email' ],
-
 			// Webhook.
 			[
 				'title' => __( 'Webhook', 'tet-order-notifications' ),
@@ -609,11 +577,11 @@ class Tet_Notify_Settings {
 				'title' => __( 'Message', 'tet-order-notifications' ),
 				'type'  => 'title',
 				'id'    => 'tet_notify_message',
-				'desc'  => __( 'Used by Telegram, Slack, Discord and email. Leave empty for the default text.', 'tet-order-notifications' ),
+				'desc'  => __( 'Used by Telegram, Slack and Discord. Leave empty for the default text.', 'tet-order-notifications' ),
 			],
 			[
 				'title'       => __( 'Title', 'tet-order-notifications' ),
-				'desc'        => __( 'Bold first line; the email subject.', 'tet-order-notifications' ),
+				'desc'        => __( 'Shown in bold as the first line.', 'tet-order-notifications' ),
 				'id'          => 'tet_notify_title',
 				'type'        => 'text',
 				'css'         => 'min-width:400px;',

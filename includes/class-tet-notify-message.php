@@ -134,10 +134,6 @@ class Tet_Notify_Message {
 		];
 	}
 
-	public static function email_body( string $body, string $url, string $link_label ): string {
-		return $body . ( $url ? "\n\n" . $link_label . ': ' . $url : '' ) . "\n";
-	}
-
 	/** Structured JSON for the generic webhook. */
 	public static function webhook_payload( array $data, string $title, string $body ): array {
 		return [
@@ -194,16 +190,6 @@ class Tet_Notify_Message {
 			}
 		}
 		return array_values( array_unique( $ids ) );
-	}
-
-	public static function parse_emails( string $value ): array {
-		$out = [];
-		foreach ( preg_split( '/[\s,;]+/', $value ) as $email ) {
-			if ( '' !== $email && false !== filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
-				$out[] = $email;
-			}
-		}
-		return array_values( array_unique( $out ) );
 	}
 
 	public static function valid_slack_webhook( string $url ): bool {

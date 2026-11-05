@@ -15,7 +15,6 @@ class Tet_Notify_Channels {
 			'telegram' => 'Telegram',
 			'slack'    => 'Slack',
 			'discord'  => 'Discord',
-			'email'    => __( 'Email', 'tet-order-notifications' ),
 			'webhook'  => __( 'Webhook', 'tet-order-notifications' ),
 		];
 	}
@@ -26,7 +25,6 @@ class Tet_Notify_Channels {
 			'telegram' => [ 'token', 'chat_ids' ],
 			'slack'    => [ 'webhook' ],
 			'discord'  => [ 'webhook' ],
-			'email'    => [ 'recipients' ],
 			'webhook'  => [ 'url', 'secret' ],
 		];
 		return $keys[ $channel ] ?? [];
@@ -71,8 +69,6 @@ class Tet_Notify_Channels {
 				return Tet_Notify_Message::valid_slack_webhook( $config['webhook'] ) ? '' : __( 'The webhook URL must start with https://hooks.slack.com/', 'tet-order-notifications' );
 			case 'discord':
 				return Tet_Notify_Message::valid_discord_webhook( $config['webhook'] ) ? '' : __( 'The webhook URL must look like https://discord.com/api/webhooks/…', 'tet-order-notifications' );
-			case 'email':
-				return Tet_Notify_Message::parse_emails( $config['recipients'] ) ? '' : __( 'Add at least one valid email address.', 'tet-order-notifications' );
 			case 'webhook':
 				return Tet_Notify_Message::valid_webhook_url( $config['url'] ) ? '' : __( 'Enter a URL starting with https:// or http://', 'tet-order-notifications' );
 		}
@@ -114,9 +110,6 @@ class Tet_Notify_Channels {
 				return self::post_json( $config['webhook'], Tet_Notify_Message::slack_payload( $title, $body, $url, $label ) );
 			case 'discord':
 				return self::post_json( $config['webhook'], Tet_Notify_Message::discord_payload( $title, $body, $url, (string) ( $data['date_iso'] ?? '' ) ) );
-			case 'email':
-				$sent = wp_mail( Tet_Notify_Message::parse_emails( $config['recipients'] ), $title, Tet_Notify_Message::email_body( $body, $url, $label ), [ 'Content-Type: text/plain; charset=UTF-8' ] );
-				return $sent ? true : new WP_Error( 'tet_notify_mail', __( 'WordPress could not send the email (wp_mail failed).', 'tet-order-notifications' ) );
 			case 'webhook':
 				return self::send_webhook( $config, Tet_Notify_Message::webhook_payload( $data, $title, $body ), $is_test );
 		}

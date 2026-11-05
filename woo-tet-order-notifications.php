@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       Order Notifications for WooCommerce
  * Plugin URI:        https://ttrp.gr
- * Description:       Instant new-order notifications to Telegram, Slack, Discord, email or a webhook, plus real-time pop-ups with sound in the WordPress admin.
+ * Description:       Instant new-order notifications to Telegram, Slack, Discord or a webhook, plus real-time pop-ups with sound in the WordPress admin.
  * Version:           1.0.0
  * Author:            Michalis Tetteris
  * Author URI:        https://ttrp.gr

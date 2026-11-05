@@ -106,10 +106,6 @@ test( 'chat ids: numbers, groups, @channels; junk dropped', function () {
 	eq( [ '12345', '-1001234567890', '@my_shop' ], Tet_Notify_Message::parse_chat_ids( "12345, -1001234567890\n@my_shop, bad id!, 12345" ) );
 } );
 
-test( 'email list parsing', function () {
-	eq( [ 'a@b.gr', 'c@d.com' ], Tet_Notify_Message::parse_emails( 'a@b.gr; nope, c@d.com a@b.gr' ) );
-} );
-
 test( 'slack and discord webhook validation', function () {
 	eq( true, Tet_Notify_Message::valid_slack_webhook( 'https://hooks.slack.com/services/T000/B000/XXXX' ) );
 	eq( false, Tet_Notify_Message::valid_slack_webhook( 'https://evil.example/services/T0' ) );

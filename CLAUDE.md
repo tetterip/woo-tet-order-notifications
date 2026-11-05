@@ -2,7 +2,7 @@
 
 ## Idea
 
-Tells the shop about every new order the moment it arrives: on Telegram, Slack, Discord, by email or a JSON
+Tells the shop about every new order the moment it arrives: on Telegram, Slack, Discord or a JSON
 webhook, and with a real-time pop-up + sound inside wp-admin («Έχετε νέα online παραγγελία»). v1 covers **new
 orders only**; other events (cancellations, return requests, low stock) can reuse the same channels later.
 
@@ -16,7 +16,7 @@ uninstall.php                          Drops the events table, tet_notify_* opti
 includes/
   class-tet-notify-message.php         Pure (no WP): template tags, per-channel formatting, payloads, validation, should_notify()
   class-tet-notify-order-data.php      WC_Order → flat plain-text array used by templates, channels and admin alerts; sample data
-  class-tet-notify-channels.php        Channel config (options), config_error(), send() per channel via wp_remote_post / wp_mail
+  class-tet-notify-channels.php        Channel config (options), config_error(), send() per channel via wp_remote_post
   class-tet-notify-events.php          Table {prefix}tet_notify_events: atomic "announce once" + cursor for the admin alerts
   class-tet-notify-dispatcher.php      Status hooks → should_notify → claim → Action Scheduler job → channels
   class-tet-notify-live.php            Admin alerts: REST endpoint, script data, admin bar bell, mute + nonce AJAX
@@ -70,10 +70,9 @@ No build step.
 
 | Option | Default | Notes |
 |---|---|---|
-| `tet_notify_{telegram,slack,discord,email,webhook}_enabled` | no | |
+| `tet_notify_{telegram,slack,discord,webhook}_enabled` | no | |
 | `tet_notify_telegram_token`, `_chat_ids` | '' | Chat IDs comma separated (`-100…` groups, `@channel`) |
 | `tet_notify_slack_webhook`, `tet_notify_discord_webhook` | '' | |
-| `tet_notify_email_recipients` | '' | Comma separated |
 | `tet_notify_webhook_url`, `_secret` | '' | Secret → `X-Tet-Signature: sha256=<hmac>` |
 | `tet_notify_statuses` | `[wc-processing, wc-on-hold]` | |
 | `tet_notify_include_admin` | no | |
@@ -120,7 +119,7 @@ User meta `tet_notify_muted` (yes/no). Order meta `_tet_notify_sent` (timestamp)
 ## Manual testing checklist
 
 - [ ] Activate → table `tet_notify_events` exists; settings open on Admin alerts; enabled channel cards start open, others closed; badge follows Enable; "How to set it up" open until a channel is set up; "Find my chat ID" link follows the typed token; `desc_tip` icons show text
-- [ ] Each channel's "Send test message" with real credentials (Telegram group + private chat, Slack, Discord, email, webhook.site)
+- [ ] Each channel's "Send test message" with real credentials (Telegram group + private chat, Slack, Discord, webhook.site)
 - [ ] Wrong token / URL → clear error under the button and a warning on the Channels tab
 - [ ] Classic and block checkout with COD → one message per channel, one admin pop-up; bank transfer (on-hold) too
 - [ ] Card payment left pending → nothing; completing it later → announced once
