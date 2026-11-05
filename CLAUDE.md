@@ -115,6 +115,8 @@ User meta `tet_notify_muted` (yes/no). Order meta `_tet_notify_sent` (timestamp)
 - 2026-11-05 on playground.ttrp.eu (Chrome, Greek admin): installed from zip, "Play the sound" plays the bundled
   `new-order-el.mp3`. Assets carry the file time in `?ver=` (`tet_notify_asset_ver()`), because a reinstalled zip
   with the same version kept a cached `live.js`.
+- 2026-11-05 on playground.ttrp.eu: a real order announced (admin pop-up with sound). Slack and Discord not yet
+  tested against the real services (payload format is covered by the unit tests).
 
 ## Manual testing checklist
 
