@@ -15,11 +15,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Domain: tet-order-notifications\n"
 
-#: includes/class-tet-notify-channels.php:18 includes/class-tet-notify-settings.php:431
+#: includes/class-tet-notify-channels.php:18 includes/class-tet-notify-settings.php:521
 msgid "Email"
 msgstr ""
 
-#: includes/class-tet-notify-channels.php:19 includes/class-tet-notify-settings.php:455
+#: includes/class-tet-notify-channels.php:19 includes/class-tet-notify-settings.php:544
 msgid "Webhook"
 msgstr ""
 
@@ -47,7 +47,7 @@ msgstr ""
 msgid "Enter a URL starting with https:// or http://"
 msgstr ""
 
-#: includes/class-tet-notify-channels.php:79 includes/class-tet-notify-channels.php:123 includes/class-tet-notify-settings.php:675
+#: includes/class-tet-notify-channels.php:79 includes/class-tet-notify-channels.php:123 includes/class-tet-notify-settings.php:763
 msgid "Unknown channel."
 msgstr ""
 
@@ -119,7 +119,7 @@ msgstr ""
 msgid "Click to enable sound"
 msgstr ""
 
-#: includes/class-tet-notify-live.php:79 includes/class-tet-notify-live.php:127
+#: includes/class-tet-notify-live.php:79 includes/class-tet-notify-live.php:132
 msgid "Enable desktop notifications"
 msgstr ""
 
@@ -127,19 +127,19 @@ msgstr ""
 msgid "Order alerts paused: log in again"
 msgstr ""
 
-#: includes/class-tet-notify-live.php:81 includes/class-tet-notify-live.php:115
+#: includes/class-tet-notify-live.php:81 includes/class-tet-notify-live.php:120
 msgid "Mute"
 msgstr ""
 
-#: includes/class-tet-notify-live.php:82 includes/class-tet-notify-live.php:115
+#: includes/class-tet-notify-live.php:82 includes/class-tet-notify-live.php:120
 msgid "Unmute"
 msgstr ""
 
-#: includes/class-tet-notify-live.php:121
+#: includes/class-tet-notify-live.php:126
 msgid "Play the sound"
 msgstr ""
 
-#: includes/class-tet-notify-live.php:134 includes/class-tet-notify-settings.php:104
+#: includes/class-tet-notify-live.php:139 includes/class-tet-notify-settings.php:104
 msgid "Settings"
 msgstr ""
 
@@ -184,11 +184,11 @@ msgstr ""
 msgid "Sending…"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:181 includes/class-tet-notify-settings.php:294
+#: includes/class-tet-notify-settings.php:181 includes/class-tet-notify-settings.php:386
 msgid "On"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:182 includes/class-tet-notify-settings.php:290
+#: includes/class-tet-notify-settings.php:182 includes/class-tet-notify-settings.php:382
 msgid "Off"
 msgstr ""
 
@@ -220,7 +220,7 @@ msgstr ""
 msgid "Channels"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:212 includes/class-tet-notify-settings.php:521
+#: includes/class-tet-notify-settings.php:212 includes/class-tet-notify-settings.php:609
 msgid "Message"
 msgstr ""
 
@@ -228,274 +228,360 @@ msgstr ""
 msgid "Save settings"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:255
+#. translators: %s: link to @BotFather.
+#: includes/class-tet-notify-settings.php:265
+msgid "In Telegram, open %s and send <code>/newbot</code>. Give the bot a name (e.g. \"My shop orders\") and then a username that ends in <code>bot</code>."
+msgstr ""
+
+#. translators: %s: link to @BotFather.
+#: includes/class-tet-notify-settings.php:266
+msgid "BotFather replies with a <strong>token</strong> like <code>123456789:AAH…</code>. Paste it in <strong>Bot token</strong> below."
+msgstr ""
+
+#. translators: %s: link to @BotFather.
+#: includes/class-tet-notify-settings.php:267
+msgid "Choose where the messages go. <strong>Just you:</strong> open your new bot (the t.me/… link in BotFather's reply) and press <strong>Start</strong>. <strong>A group:</strong> add the bot to the group and send <code>/start@YourBotName</code> in it. <strong>A channel:</strong> add the bot to the channel as an administrator and post something."
+msgstr ""
+
+#: includes/class-tet-notify-settings.php:268
+msgid "With the token typed below, click <strong>Find my chat ID</strong>. A Telegram page opens with text like <code>\"chat\":{\"id\":123456789</code>: that number is the chat ID. Groups and channels have a negative number (e.g. <code>-1001234567890</code>); keep the minus sign."
+msgstr ""
+
+#: includes/class-tet-notify-settings.php:269
+msgid "Paste it in <strong>Chat IDs</strong> (several are fine, separated by commas), tick <strong>Enable</strong>, save, and press <strong>Send test message</strong>."
+msgstr ""
+
+#: includes/class-tet-notify-settings.php:271
+msgid "If the page shows only <code>\"result\":[]</code>, send the bot a new message and reload it: Telegram keeps them there for about 24 hours. Keep the token private: anyone who has it can send messages as your bot."
+msgstr ""
+
+#. translators: %s: link to api.slack.com/apps.
+#: includes/class-tet-notify-settings.php:277
+msgid "Open %s, click <strong>Create New App</strong> → <strong>From scratch</strong>, name it (e.g. \"Orders\") and pick your workspace."
+msgstr ""
+
+#. translators: %s: link to api.slack.com/apps.
+#: includes/class-tet-notify-settings.php:278
+msgid "In the app's menu open <strong>Incoming Webhooks</strong> and switch <strong>Activate Incoming Webhooks</strong> on."
+msgstr ""
+
+#. translators: %s: link to api.slack.com/apps.
+#: includes/class-tet-notify-settings.php:279
+msgid "Click <strong>Add New Webhook to Workspace</strong> at the bottom, choose the channel for the orders and click <strong>Allow</strong>."
+msgstr ""
+
+#: includes/class-tet-notify-settings.php:280
+msgid "Copy the <strong>Webhook URL</strong> (it starts with <code>https://hooks.slack.com/services/</code>), paste it below, tick <strong>Enable</strong>, save, and press <strong>Send test message</strong>."
+msgstr ""
+
+#: includes/class-tet-notify-settings.php:282
+msgid "You may need a Slack workspace admin to approve the app."
+msgstr ""
+
+#: includes/class-tet-notify-settings.php:287
+msgid "In Discord, open your server, hover over the channel for the orders and click the gear (<strong>Edit Channel</strong>)."
+msgstr ""
+
+#: includes/class-tet-notify-settings.php:288
+msgid "Open <strong>Integrations</strong> → <strong>Webhooks</strong> → <strong>New Webhook</strong>. You can rename it (e.g. \"Orders\") and change its picture."
+msgstr ""
+
+#: includes/class-tet-notify-settings.php:289
+msgid "Click <strong>Copy Webhook URL</strong>, paste it below, tick <strong>Enable</strong>, save, and press <strong>Send test message</strong>."
+msgstr ""
+
+#: includes/class-tet-notify-settings.php:291
+msgid "You need the \"Manage Webhooks\" permission on the server."
+msgstr ""
+
+#: includes/class-tet-notify-settings.php:296
+msgid "Enter one or more addresses, separated by commas (e.g. the warehouse or a partner)."
+msgstr ""
+
+#: includes/class-tet-notify-settings.php:297
+msgid "Tick <strong>Enable</strong>, save, and press <strong>Send test message</strong>."
+msgstr ""
+
+#: includes/class-tet-notify-settings.php:299
+msgid "A short plain-text email, sent with your site's mail settings. WooCommerce's own \"New order\" email is not affected. If the test doesn't arrive, check the spam folder; sites without proper mail settings need an SMTP plugin."
+msgstr ""
+
+#: includes/class-tet-notify-settings.php:304
+msgid "In your automation tool, create a trigger that receives a webhook and copy its URL: in n8n a <strong>Webhook</strong> node (POST), in Make a <strong>Custom webhook</strong>, in Zapier <strong>Webhooks by Zapier → Catch Hook</strong>."
+msgstr ""
+
+#: includes/class-tet-notify-settings.php:305
+msgid "Paste the URL below. Optionally enter a <strong>Secret</strong> to check that requests really come from your shop (the <code>X-Tet-Signature</code> header)."
+msgstr ""
+
+#: includes/class-tet-notify-settings.php:306
+msgid "Tick <strong>Enable</strong>, save, and press <strong>Send test message</strong>: the tool receives a sample order (header <code>X-Tet-Event: test</code>), so you can map its fields."
+msgstr ""
+
+#: includes/class-tet-notify-settings.php:308
+msgid "The order is sent as JSON (POST), including the customer's email and phone. Addresses on your own server or local network are blocked for safety."
+msgstr ""
+
+#: includes/class-tet-notify-settings.php:327
+msgid "How to set it up"
+msgstr ""
+
+#: includes/class-tet-notify-settings.php:334
+msgid "Find my chat ID"
+msgstr ""
+
+#: includes/class-tet-notify-settings.php:335
+msgid "Type the bot token below first."
+msgstr ""
+
+#: includes/class-tet-notify-settings.php:347
 msgid "Message to a chat, group or channel"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:256
+#: includes/class-tet-notify-settings.php:348
 msgid "Message to a Slack channel"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:257
+#: includes/class-tet-notify-settings.php:349
 msgid "Message to a Discord channel"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:258
+#: includes/class-tet-notify-settings.php:350
 msgid "Short email to extra addresses"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:259
+#: includes/class-tet-notify-settings.php:351
 msgid "JSON to n8n, Make, Zapier or your own app"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:292
+#: includes/class-tet-notify-settings.php:384
 msgid "Needs setup"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:318
+#: includes/class-tet-notify-settings.php:411
 msgid "Template tags"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:323
+#: includes/class-tet-notify-settings.php:416
 msgid "Lines left empty by a tag (e.g. no customer note) are removed. A link to the order is added to every message."
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:324
+#: includes/class-tet-notify-settings.php:417
 msgid "Customer details in the message (name, email, phone) are sent to the service of each channel. Include only what you need."
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:344
+#: includes/class-tet-notify-settings.php:437
 msgid "Each new order is sent to every channel you enable here. Messages are sent in the background, so a slow service never delays the checkout."
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:353
-msgid "Create a bot with @BotFather and copy its token. Send the bot a message (or add it to a group), then open https://api.telegram.org/bot<token>/getUpdates to find the chat ID."
-msgstr ""
-
-#: includes/class-tet-notify-settings.php:356 includes/class-tet-notify-settings.php:387 includes/class-tet-notify-settings.php:412 includes/class-tet-notify-settings.php:437 includes/class-tet-notify-settings.php:461 includes/class-tet-notify-settings.php:559
+#: includes/class-tet-notify-settings.php:448 includes/class-tet-notify-settings.php:478 includes/class-tet-notify-settings.php:502 includes/class-tet-notify-settings.php:526 includes/class-tet-notify-settings.php:549 includes/class-tet-notify-settings.php:647
 msgid "Enable"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:357
+#: includes/class-tet-notify-settings.php:449
 msgid "Send new orders to Telegram"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:363
+#: includes/class-tet-notify-settings.php:455
 msgid "Bot token"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:370
+#: includes/class-tet-notify-settings.php:462
 msgid "Chat IDs"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:371
+#: includes/class-tet-notify-settings.php:463
 msgid "One or more, separated by commas. Groups start with a minus sign; public channels can use @name."
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:384
-msgid "In Slack, create an app with an Incoming Webhook for the channel you want and paste its URL."
-msgstr ""
-
-#: includes/class-tet-notify-settings.php:388
+#: includes/class-tet-notify-settings.php:479
 msgid "Send new orders to Slack"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:394 includes/class-tet-notify-settings.php:419
+#: includes/class-tet-notify-settings.php:485 includes/class-tet-notify-settings.php:509
 msgid "Webhook URL"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:409
-msgid "In Discord: channel settings → Integrations → Webhooks → New webhook → Copy webhook URL."
-msgstr ""
-
-#: includes/class-tet-notify-settings.php:413
+#: includes/class-tet-notify-settings.php:503
 msgid "Send new orders to Discord"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:434
-msgid "A short plain-text email to extra addresses, e.g. the warehouse. WooCommerce's own \"New order\" email is not affected."
-msgstr ""
-
-#: includes/class-tet-notify-settings.php:438
+#: includes/class-tet-notify-settings.php:527
 msgid "Send new orders by email"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:444
+#: includes/class-tet-notify-settings.php:533
 msgid "Recipients"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:445
+#: includes/class-tet-notify-settings.php:534
 msgid "Separate addresses with commas."
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:458
-msgid "Sends the order as JSON (POST) to any URL, e.g. n8n, Make or Zapier. The payload includes the customer's email and phone."
-msgstr ""
-
-#: includes/class-tet-notify-settings.php:462
+#: includes/class-tet-notify-settings.php:550
 msgid "Send new orders to a webhook"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:468
+#: includes/class-tet-notify-settings.php:556
 msgid "URL"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:475
+#: includes/class-tet-notify-settings.php:563
 msgid "Secret"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:476
+#: includes/class-tet-notify-settings.php:564
 msgid "Optional. Each request then carries an X-Tet-Signature header: sha256= and the HMAC-SHA256 of the body with this secret."
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:490
+#: includes/class-tet-notify-settings.php:578
 msgid "When to notify"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:493
+#: includes/class-tet-notify-settings.php:581
 msgid "An order is announced once, the first time it reaches one of these statuses. Orders awaiting payment (e.g. a card payment that was not completed) are not announced."
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:496
+#: includes/class-tet-notify-settings.php:584
 msgid "Order statuses"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:505
+#: includes/class-tet-notify-settings.php:593
 msgid "Orders created in the admin"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:506
+#: includes/class-tet-notify-settings.php:594
 msgid "Also announce orders created by hand in the admin (e.g. phone orders)"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:512
+#: includes/class-tet-notify-settings.php:600
 msgid "Debug log"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:513
+#: includes/class-tet-notify-settings.php:601
 msgid "Log every message sent (WooCommerce → Status → Logs, source tet-order-notifications). Failures are always logged."
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:524
+#: includes/class-tet-notify-settings.php:612
 msgid "Used by Telegram, Slack, Discord and email. Leave empty for the default text."
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:527
+#: includes/class-tet-notify-settings.php:615
 msgid "Title"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:528
+#: includes/class-tet-notify-settings.php:616
 msgid "Bold first line; the email subject."
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:535
+#: includes/class-tet-notify-settings.php:623
 msgid "Body"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:553
+#: includes/class-tet-notify-settings.php:641
 msgid "Alerts in the admin"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:556
+#: includes/class-tet-notify-settings.php:644
 msgid "While someone is logged in to the admin, a new order shows a pop-up on every admin page and plays a sound. Each user can mute it from the bell in the admin bar."
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:560
+#: includes/class-tet-notify-settings.php:648
 msgid "Show new orders in the admin as they arrive"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:566
+#: includes/class-tet-notify-settings.php:654
 msgid "User roles"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:567
+#: includes/class-tet-notify-settings.php:655
 msgid "Users with these roles get the alerts. They also need permission to edit orders."
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:576
+#: includes/class-tet-notify-settings.php:664
 msgid "Check every"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:577
+#: includes/class-tet-notify-settings.php:665
 msgid "seconds (10–120). In a background browser tab, browsers may check only once a minute."
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:585
+#: includes/class-tet-notify-settings.php:673
 msgid "Desktop notifications"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:586
+#: includes/class-tet-notify-settings.php:674
 msgid "Also show a system notification when the admin tab is in the background (each browser asks for permission once)"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:594 includes/class-tet-notify-settings.php:600
+#: includes/class-tet-notify-settings.php:682 includes/class-tet-notify-settings.php:688
 msgid "Sound"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:597
+#: includes/class-tet-notify-settings.php:685
 msgid "Browsers only play sound after you click somewhere on the page. Until then the bell in the admin bar shows \"Click to enable sound\"."
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:605
+#: includes/class-tet-notify-settings.php:693
 msgid "Chime and spoken message"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:606
+#: includes/class-tet-notify-settings.php:694
 msgid "Chime"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:607
+#: includes/class-tet-notify-settings.php:695
 msgid "My own sound file"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:608
+#: includes/class-tet-notify-settings.php:696
 msgid "No sound"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:612
+#: includes/class-tet-notify-settings.php:700
 msgid "Spoken message"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:613
+#: includes/class-tet-notify-settings.php:701
 msgid "Leave empty to use the recorded message that comes with the plugin (Greek and English). Your own text is read by the browser's voice for the admin language; if the computer has no voice for that language, only the chime plays."
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:620
+#: includes/class-tet-notify-settings.php:708
 msgid "Sound file"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:621
+#: includes/class-tet-notify-settings.php:709
 msgid "An MP3, OGG or WAV from the media library, e.g. your own recording."
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:626
+#: includes/class-tet-notify-settings.php:714
 msgid "Repeat"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:627
+#: includes/class-tet-notify-settings.php:715
 msgid "Repeat the sound every 30 seconds until the pop-up is closed"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:643
+#: includes/class-tet-notify-settings.php:731
 msgid "Send test message"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:645
+#: includes/class-tet-notify-settings.php:733
 msgid "Uses the values above, even before you save, and your latest order (or sample data)."
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:658
+#: includes/class-tet-notify-settings.php:746
 msgid "Choose file"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:659
+#: includes/class-tet-notify-settings.php:747
 msgid "Play"
 msgstr ""
 
-#: includes/class-tet-notify-settings.php:671
+#: includes/class-tet-notify-settings.php:759
 msgid "Not allowed."
 msgstr ""
 
-#: woo-tet-order-notifications.php:42
+#: woo-tet-order-notifications.php:51
 msgid "Order Notifications for WooCommerce requires WooCommerce to be installed and active."
 msgstr ""

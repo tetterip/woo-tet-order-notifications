@@ -85,3 +85,33 @@
 		transition: none;
 	}
 }
+
+/* Setup guide inside a channel card. */
+.tet-notify-howto {
+	margin: 14px 0 4px;
+	padding: 10px 14px;
+	background: #f6f7f7;
+	border-radius: 4px;
+}
+.tet-notify-howto > summary {
+	cursor: pointer;
+	font-weight: 600;
+	color: #2271b1;
+}
+.tet-notify-howto ol {
+	margin: 10px 0 8px 20px;
+}
+.tet-notify-howto li {
+	margin-bottom: 6px;
+	line-height: 1.6;
+	max-width: 760px;
+}
+.tet-notify-howto code {
+	font-size: 12px;
+}
+.tet-notify-howto .description {
+	max-width: 760px;
+}
+.tet-notify-getupdates-hint {
+	margin-left: 8px;
+}

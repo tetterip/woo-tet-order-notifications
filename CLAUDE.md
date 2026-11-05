@@ -119,7 +119,7 @@ User meta `tet_notify_muted` (yes/no). Order meta `_tet_notify_sent` (timestamp)
 
 ## Manual testing checklist
 
-- [ ] Activate → table `tet_notify_events` exists; settings open on Admin alerts; enabled channel cards start open, others closed; badge follows Enable; `desc_tip` icons show text
+- [ ] Activate → table `tet_notify_events` exists; settings open on Admin alerts; enabled channel cards start open, others closed; badge follows Enable; "How to set it up" open until a channel is set up; "Find my chat ID" link follows the typed token; `desc_tip` icons show text
 - [ ] Each channel's "Send test message" with real credentials (Telegram group + private chat, Slack, Discord, email, webhook.site)
 - [ ] Wrong token / URL → clear error under the button and a warning on the Channels tab
 - [ ] Classic and block checkout with COD → one message per channel, one admin pop-up; bank transfer (on-hold) too

@@ -249,6 +249,98 @@ class Tet_Notify_Settings {
 		<?php
 	}
 
+	/**
+	 * Step-by-step setup guide per channel: [ 'steps' => string[], 'note' => string ].
+	 * Strings may hold <a>, <code>, <strong> (see render_howto()).
+	 */
+	private static function channel_howto( string $id ): array {
+		$link = static function ( string $url, string $text ): string {
+			return '<a href="' . esc_url( $url ) . '" target="_blank" rel="noopener noreferrer">' . esc_html( $text ) . '</a>';
+		};
+		switch ( $id ) {
+			case 'telegram':
+				return [
+					'steps' => [
+						/* translators: %s: link to @BotFather. */
+						sprintf( __( 'In Telegram, open %s and send <code>/newbot</code>. Give the bot a name (e.g. "My shop orders") and then a username that ends in <code>bot</code>.', 'tet-order-notifications' ), $link( 'https://t.me/BotFather', '@BotFather' ) ),
+						__( 'BotFather replies with a <strong>token</strong> like <code>123456789:AAH…</code>. Paste it in <strong>Bot token</strong> below.', 'tet-order-notifications' ),
+						__( 'Choose where the messages go. <strong>Just you:</strong> open your new bot (the t.me/… link in BotFather\'s reply) and press <strong>Start</strong>. <strong>A group:</strong> add the bot to the group and send <code>/start@YourBotName</code> in it. <strong>A channel:</strong> add the bot to the channel as an administrator and post something.', 'tet-order-notifications' ),
+						__( 'With the token typed below, click <strong>Find my chat ID</strong>. A Telegram page opens with text like <code>"chat":{"id":123456789</code>: that number is the chat ID. Groups and channels have a negative number (e.g. <code>-1001234567890</code>); keep the minus sign.', 'tet-order-notifications' ),
+						__( 'Paste it in <strong>Chat IDs</strong> (several are fine, separated by commas), tick <strong>Enable</strong>, save, and press <strong>Send test message</strong>.', 'tet-order-notifications' ),
+					],
+					'note'  => __( 'If the page shows only <code>"result":[]</code>, send the bot a new message and reload it: Telegram keeps them there for about 24 hours. Keep the token private: anyone who has it can send messages as your bot.', 'tet-order-notifications' ),
+				];
+			case 'slack':
+				return [
+					'steps' => [
+						/* translators: %s: link to api.slack.com/apps. */
+						sprintf( __( 'Open %s, click <strong>Create New App</strong> → <strong>From scratch</strong>, name it (e.g. "Orders") and pick your workspace.', 'tet-order-notifications' ), $link( 'https://api.slack.com/apps', 'api.slack.com/apps' ) ),
+						__( 'In the app\'s menu open <strong>Incoming Webhooks</strong> and switch <strong>Activate Incoming Webhooks</strong> on.', 'tet-order-notifications' ),
+						__( 'Click <strong>Add New Webhook to Workspace</strong> at the bottom, choose the channel for the orders and click <strong>Allow</strong>.', 'tet-order-notifications' ),
+						__( 'Copy the <strong>Webhook URL</strong> (it starts with <code>https://hooks.slack.com/services/</code>), paste it below, tick <strong>Enable</strong>, save, and press <strong>Send test message</strong>.', 'tet-order-notifications' ),
+					],
+					'note'  => __( 'You may need a Slack workspace admin to approve the app.', 'tet-order-notifications' ),
+				];
+			case 'discord':
+				return [
+					'steps' => [
+						__( 'In Discord, open your server, hover over the channel for the orders and click the gear (<strong>Edit Channel</strong>).', 'tet-order-notifications' ),
+						__( 'Open <strong>Integrations</strong> → <strong>Webhooks</strong> → <strong>New Webhook</strong>. You can rename it (e.g. "Orders") and change its picture.', 'tet-order-notifications' ),
+						__( 'Click <strong>Copy Webhook URL</strong>, paste it below, tick <strong>Enable</strong>, save, and press <strong>Send test message</strong>.', 'tet-order-notifications' ),
+					],
+					'note'  => __( 'You need the "Manage Webhooks" permission on the server.', 'tet-order-notifications' ),
+				];
+			case 'email':
+				return [
+					'steps' => [
+						__( 'Enter one or more addresses, separated by commas (e.g. the warehouse or a partner).', 'tet-order-notifications' ),
+						__( 'Tick <strong>Enable</strong>, save, and press <strong>Send test message</strong>.', 'tet-order-notifications' ),
+					],
+					'note'  => __( 'A short plain-text email, sent with your site\'s mail settings. WooCommerce\'s own "New order" email is not affected. If the test doesn\'t arrive, check the spam folder; sites without proper mail settings need an SMTP plugin.', 'tet-order-notifications' ),
+				];
+			case 'webhook':
+				return [
+					'steps' => [
+						__( 'In your automation tool, create a trigger that receives a webhook and copy its URL: in n8n a <strong>Webhook</strong> node (POST), in Make a <strong>Custom webhook</strong>, in Zapier <strong>Webhooks by Zapier → Catch Hook</strong>.', 'tet-order-notifications' ),
+						__( 'Paste the URL below. Optionally enter a <strong>Secret</strong> to check that requests really come from your shop (the <code>X-Tet-Signature</code> header).', 'tet-order-notifications' ),
+						__( 'Tick <strong>Enable</strong>, save, and press <strong>Send test message</strong>: the tool receives a sample order (header <code>X-Tet-Event: test</code>), so you can map its fields.', 'tet-order-notifications' ),
+					],
+					'note'  => __( 'The order is sent as JSON (POST), including the customer\'s email and phone. Addresses on your own server or local network are blocked for safety.', 'tet-order-notifications' ),
+				];
+		}
+		return [ 'steps' => [], 'note' => '' ];
+	}
+
+	/** The guide inside a channel card; open until the channel is set up. */
+	private static function render_howto( string $id, bool $configured ): void {
+		$howto = self::channel_howto( $id );
+		if ( ! $howto['steps'] ) {
+			return;
+		}
+		$allowed = [
+			'a'      => [ 'href' => true, 'target' => true, 'rel' => true ],
+			'code'   => [],
+			'strong' => [],
+		];
+		?>
+		<details class="tet-notify-howto"<?php echo $configured ? '' : ' open'; ?>>
+			<summary><?php esc_html_e( 'How to set it up', 'tet-order-notifications' ); ?></summary>
+			<ol>
+				<?php foreach ( $howto['steps'] as $step ) : ?>
+					<li><?php echo wp_kses( $step, $allowed ); ?></li>
+				<?php endforeach; ?>
+			</ol>
+			<?php if ( 'telegram' === $id ) : ?>
+				<p><a href="#" class="button tet-notify-getupdates" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Find my chat ID', 'tet-order-notifications' ); ?></a>
+				<span class="description tet-notify-getupdates-hint"><?php esc_html_e( 'Type the bot token below first.', 'tet-order-notifications' ); ?></span></p>
+			<?php endif; ?>
+			<?php if ( $howto['note'] ) : ?>
+				<p class="description"><?php echo wp_kses( $howto['note'], $allowed ); ?></p>
+			<?php endif; ?>
+		</details>
+		<?php
+	}
+
 	/** Short line under each channel's name in the Channels tab. */
 	private static function channel_summaries(): array {
 		return [
@@ -305,6 +397,7 @@ class Tet_Notify_Settings {
 					if ( $error ) {
 						echo '<div class="ttrp-notice ttrp-notice--warning"><p>' . esc_html( $error ) . '</p></div>';
 					}
+					self::render_howto( $id, $enabled && ! $error );
 					woocommerce_admin_fields( $groups[ $id ] ?? [] );
 					?>
 				</div>
@@ -350,7 +443,6 @@ class Tet_Notify_Settings {
 				'title' => 'Telegram',
 				'type'  => 'title',
 				'id'    => 'tet_notify_telegram',
-				'desc'  => __( 'Create a bot with @BotFather and copy its token. Send the bot a message (or add it to a group), then open https://api.telegram.org/bot<token>/getUpdates to find the chat ID.', 'tet-order-notifications' ),
 			],
 			[
 				'title'   => __( 'Enable', 'tet-order-notifications' ),
@@ -381,7 +473,6 @@ class Tet_Notify_Settings {
 				'title' => 'Slack',
 				'type'  => 'title',
 				'id'    => 'tet_notify_slack',
-				'desc'  => __( 'In Slack, create an app with an Incoming Webhook for the channel you want and paste its URL.', 'tet-order-notifications' ),
 			],
 			[
 				'title'   => __( 'Enable', 'tet-order-notifications' ),
@@ -406,7 +497,6 @@ class Tet_Notify_Settings {
 				'title' => 'Discord',
 				'type'  => 'title',
 				'id'    => 'tet_notify_discord',
-				'desc'  => __( 'In Discord: channel settings → Integrations → Webhooks → New webhook → Copy webhook URL.', 'tet-order-notifications' ),
 			],
 			[
 				'title'   => __( 'Enable', 'tet-order-notifications' ),
@@ -431,7 +521,6 @@ class Tet_Notify_Settings {
 				'title' => __( 'Email', 'tet-order-notifications' ),
 				'type'  => 'title',
 				'id'    => 'tet_notify_email',
-				'desc'  => __( 'A short plain-text email to extra addresses, e.g. the warehouse. WooCommerce\'s own "New order" email is not affected.', 'tet-order-notifications' ),
 			],
 			[
 				'title'   => __( 'Enable', 'tet-order-notifications' ),
@@ -455,7 +544,6 @@ class Tet_Notify_Settings {
 				'title' => __( 'Webhook', 'tet-order-notifications' ),
 				'type'  => 'title',
 				'id'    => 'tet_notify_webhook',
-				'desc'  => __( 'Sends the order as JSON (POST) to any URL, e.g. n8n, Make or Zapier. The payload includes the customer\'s email and phone.', 'tet-order-notifications' ),
 			],
 			[
 				'title'   => __( 'Enable', 'tet-order-notifications' ),

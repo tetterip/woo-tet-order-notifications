@@ -73,3 +73,23 @@
 			.text( this.checked ? cfg.i18n.on : cfg.i18n.off );
 	} );
 } )( jQuery );
+
+/* Telegram: "Find my chat ID" opens getUpdates for the token typed in the form. */
+( function ( $ ) {
+	'use strict';
+	function update() {
+		var token = $.trim( $( '#tet_notify_telegram_token' ).val() || '' );
+		var ok = /^\d{5,}:[A-Za-z0-9_-]{30,}$/.test( token );
+		$( '.tet-notify-getupdates' )
+			.attr( 'href', ok ? 'https://api.telegram.org/bot' + token + '/getUpdates' : '#' )
+			.toggleClass( 'disabled', ! ok )
+			.attr( 'aria-disabled', ok ? 'false' : 'true' );
+		$( '.tet-notify-getupdates-hint' ).toggle( ! ok );
+	}
+	$( document ).on( 'input change', '#tet_notify_telegram_token', update );
+	$( document ).on( 'click', '.tet-notify-getupdates.disabled', function ( e ) {
+		e.preventDefault();
+		$( '#tet_notify_telegram_token' ).trigger( 'focus' );
+	} );
+	$( update );
+} )( jQuery );
