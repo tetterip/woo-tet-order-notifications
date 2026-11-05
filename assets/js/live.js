@@ -117,7 +117,12 @@
 
 	// The recording that ships with the plugin; the browser's voice if it can't play.
 	function playVoiceFile() {
-		new window.Audio( cfg.voiceFile ).play().catch( speak );
+		new window.Audio( cfg.voiceFile ).play().catch( function ( err ) {
+			if ( window.console ) {
+				window.console.warn( '[Order Notifications] Could not play ' + cfg.voiceFile + ': ' + ( err && err.message ), err );
+			}
+			speak();
+		} );
 	}
 
 	function playSound( force ) {

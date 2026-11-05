@@ -26,6 +26,15 @@ define( 'TET_NOTIFY_FILE', __FILE__ );
 define( 'TET_NOTIFY_PATH', plugin_dir_path( __FILE__ ) );
 define( 'TET_NOTIFY_URL', plugin_dir_url( __FILE__ ) );
 
+/**
+ * Version string for an asset: plugin version + file time, so browsers fetch a
+ * changed file even when the plugin version stays the same (e.g. a reinstalled zip).
+ */
+function tet_notify_asset_ver( string $rel ): string {
+	$time = @filemtime( TET_NOTIFY_PATH . $rel ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
+	return TET_NOTIFY_VERSION . ( $time ? '.' . $time : '' );
+}
+
 // Declare HPOS and block checkout compatibility (the plugin only reads orders and writes one meta key).
 add_action( 'before_woocommerce_init', function () {
 	if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {

@@ -167,12 +167,12 @@ class Tet_Notify_Settings {
 			return;
 		}
 		wp_enqueue_style( 'woocommerce_admin_styles' );
-		wp_enqueue_style( 'ttrp-admin', TET_NOTIFY_URL . 'assets/ttrp-admin.css', [], TET_NOTIFY_VERSION );
-		wp_enqueue_style( 'tet-notify-settings', TET_NOTIFY_URL . 'assets/css/settings.css', [], TET_NOTIFY_VERSION );
+		wp_enqueue_style( 'ttrp-admin', TET_NOTIFY_URL . 'assets/ttrp-admin.css', [], tet_notify_asset_ver( 'assets/ttrp-admin.css' ) );
+		wp_enqueue_style( 'tet-notify-settings', TET_NOTIFY_URL . 'assets/css/settings.css', [], tet_notify_asset_ver( 'assets/css/settings.css' ) );
 		if ( 'alerts' === self::current_tab() ) {
 			wp_enqueue_media();
 		}
-		wp_enqueue_script( 'tet-notify-settings', TET_NOTIFY_URL . 'assets/js/settings.js', [ 'jquery' ], TET_NOTIFY_VERSION, true );
+		wp_enqueue_script( 'tet-notify-settings', TET_NOTIFY_URL . 'assets/js/settings.js', [ 'jquery' ], tet_notify_asset_ver( 'assets/js/settings.js' ), true );
 		wp_localize_script( 'tet-notify-settings', 'tetNotifySettings', [
 			'ajaxUrl' => admin_url( 'admin-ajax.php' ),
 			'nonce'   => wp_create_nonce( 'tet_notify_test' ),

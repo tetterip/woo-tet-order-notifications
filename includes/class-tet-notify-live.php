@@ -42,8 +42,8 @@ class Tet_Notify_Live {
 			return;
 		}
 		wp_enqueue_style( 'dashicons' );
-		wp_enqueue_style( 'tet-notify-live', TET_NOTIFY_URL . 'assets/css/live.css', [], TET_NOTIFY_VERSION );
-		wp_enqueue_script( 'tet-notify-live', TET_NOTIFY_URL . 'assets/js/live.js', [], TET_NOTIFY_VERSION, true );
+		wp_enqueue_style( 'tet-notify-live', TET_NOTIFY_URL . 'assets/css/live.css', [], tet_notify_asset_ver( 'assets/css/live.css' ) );
+		wp_enqueue_script( 'tet-notify-live', TET_NOTIFY_URL . 'assets/js/live.js', [], tet_notify_asset_ver( 'assets/js/live.js' ), true );
 
 		$sound = (string) get_option( 'tet_notify_live_sound', 'voice' );
 		$file  = esc_url_raw( (string) get_option( 'tet_notify_live_sound_url', '' ) );
@@ -90,12 +90,17 @@ class Tet_Notify_Live {
 	 * browser's own voice instead. '' when there is no recording for the admin language.
 	 */
 	private static function voice_file(): string {
-		if ( '' !== trim( (string) get_option( 'tet_notify_live_voice_text', '' ) ) ) {
+		$text = trim( (string) get_option( 'tet_notify_live_voice_text', '' ) );
+		// A saved text that is just the default (English or translated) still uses the recording.
+		$defaults = [ '', 'You have a new online order', Tet_Notify_Settings::default_voice_text() ];
+		if ( ! in_array( rtrim( $text, '.!' ), array_map( static function ( $d ) {
+			return rtrim( $d, '.!' );
+		}, $defaults ), true ) ) {
 			return '';
 		}
 		$lang = strtolower( substr( get_user_locale(), 0, 2 ) );
 		$file = 'assets/sounds/new-order-' . sanitize_file_name( $lang ) . '.mp3';
-		return file_exists( TET_NOTIFY_PATH . $file ) ? esc_url_raw( TET_NOTIFY_URL . $file ) : '';
+		return file_exists( TET_NOTIFY_PATH . $file ) ? esc_url_raw( add_query_arg( 'ver', tet_notify_asset_ver( $file ), TET_NOTIFY_URL . $file ) ) : '';
 	}
 
 	/** Bell in the admin bar: state, mute toggle, "enable sound" / desktop prompts (filled by JS). */
