@@ -263,7 +263,7 @@ class Tet_Notify_Settings {
 	/**
 	 * Channels tab: the intro, then one collapsible card per channel (native
 	 * <details>, so it works without JS and closed cards still submit their fields).
-	 * A card opens on its own when the channel is on but its settings can't work.
+	 * Enabled channels start open (with the error inside when their settings can't work); the rest start closed.
 	 */
 	private static function render_channels(): void {
 		$groups    = [];
@@ -294,7 +294,7 @@ class Tet_Notify_Settings {
 				$badge = [ 'success', __( 'On', 'tet-order-notifications' ) ];
 			}
 			?>
-			<details class="tet-notify-channel" data-channel="<?php echo esc_attr( $id ); ?>"<?php echo $error ? ' open' : ''; ?>>
+			<details class="tet-notify-channel" data-channel="<?php echo esc_attr( $id ); ?>"<?php echo $enabled ? ' open' : ''; ?>>
 				<summary>
 					<span class="tet-notify-channel-name"><?php echo esc_html( $label ); ?></span>
 					<span class="tet-notify-channel-summary"><?php echo esc_html( $summaries[ $id ] ?? '' ); ?></span>
