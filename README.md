@@ -31,8 +31,9 @@ Get told about every new order the moment it arrives: on Telegram, Slack, Discor
 ### About sound in the browser
 
 Browsers only play sound on a page after you have clicked somewhere on it. Until then the bell in the admin bar shows
-"Click to enable sound". The spoken message uses the voice your computer has for the admin language; without one, only
-the chime plays. In a background tab, browsers may check for new orders only about once a minute. For alerts that must
+"Click to enable sound". The default spoken message is a recording that comes with the plugin (Greek and English). If you
+write your own text, it is read by the voice your computer has for the admin language; without one, only the chime plays.
+The recordings were made with an AI voice (OpenAI text-to-speech). In a background tab, browsers may check for new orders only about once a minute. For alerts that must
 never be missed, also enable Telegram (or another channel) on your phone.
 
 ## Privacy

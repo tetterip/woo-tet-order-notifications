@@ -59,7 +59,7 @@ msgid "[Test] %s"
 msgstr "[Δοκιμή] %s"
 
 #. translators: %s: order number.
-#: includes/class-tet-notify-channels.php:101 includes/class-tet-notify-live.php:72
+#: includes/class-tet-notify-channels.php:101 includes/class-tet-notify-live.php:73
 msgid "Open order"
 msgstr "Άνοιγμα παραγγελίας"
 
@@ -96,52 +96,52 @@ msgid "Order notification failed. %s"
 msgstr "Η ειδοποίηση της παραγγελίας απέτυχε. %s"
 
 #. translators: %s: order number.
-#: includes/class-tet-notify-live.php:71
+#: includes/class-tet-notify-live.php:72
 msgid "New order #%s"
 msgstr "Νέα παραγγελία #%s"
 
 #. translators: %s: order number.
-#: includes/class-tet-notify-live.php:73
+#: includes/class-tet-notify-live.php:74
 msgid "Close"
 msgstr "Κλείσιμο"
 
-#: includes/class-tet-notify-live.php:74
+#: includes/class-tet-notify-live.php:75
 msgid "Close all"
 msgstr "Κλείσιμο όλων"
 
-#: includes/class-tet-notify-live.php:75
+#: includes/class-tet-notify-live.php:76
 msgid "Order alerts: sound on"
 msgstr "Ειδοποιήσεις παραγγελιών: ήχος ενεργός"
 
-#: includes/class-tet-notify-live.php:76
+#: includes/class-tet-notify-live.php:77
 msgid "Order alerts: muted"
 msgstr "Ειδοποιήσεις παραγγελιών: σίγαση"
 
-#: includes/class-tet-notify-live.php:77
+#: includes/class-tet-notify-live.php:78
 msgid "Click to enable sound"
 msgstr "Κάντε κλικ για ενεργοποίηση ήχου"
 
-#: includes/class-tet-notify-live.php:78 includes/class-tet-notify-live.php:112
+#: includes/class-tet-notify-live.php:79 includes/class-tet-notify-live.php:127
 msgid "Enable desktop notifications"
 msgstr "Ενεργοποίηση ειδοποιήσεων υπολογιστή"
 
-#: includes/class-tet-notify-live.php:79
+#: includes/class-tet-notify-live.php:80
 msgid "Order alerts paused: log in again"
 msgstr "Οι ειδοποιήσεις σταμάτησαν: συνδεθείτε ξανά"
 
-#: includes/class-tet-notify-live.php:80 includes/class-tet-notify-live.php:100
+#: includes/class-tet-notify-live.php:81 includes/class-tet-notify-live.php:115
 msgid "Mute"
 msgstr "Σίγαση"
 
-#: includes/class-tet-notify-live.php:81 includes/class-tet-notify-live.php:100
+#: includes/class-tet-notify-live.php:82 includes/class-tet-notify-live.php:115
 msgid "Unmute"
 msgstr "Κατάργηση σίγασης"
 
-#: includes/class-tet-notify-live.php:106
+#: includes/class-tet-notify-live.php:121
 msgid "Play the sound"
 msgstr "Αναπαραγωγή ήχου"
 
-#: includes/class-tet-notify-live.php:119 includes/class-tet-notify-settings.php:104
+#: includes/class-tet-notify-live.php:134 includes/class-tet-notify-settings.php:104
 msgid "Settings"
 msgstr "Ρυθμίσεις"
 
@@ -427,8 +427,8 @@ msgid "Spoken message"
 msgstr "Φωνητικό μήνυμα"
 
 #: includes/class-tet-notify-settings.php:561
-msgid "Read by the browser's voice for the admin language. If the computer has no voice for that language, only the chime plays."
-msgstr "Το διαβάζει η φωνή του browser για τη γλώσσα του διαχειριστικού. Αν ο υπολογιστής δεν έχει φωνή για αυτή τη γλώσσα, παίζει μόνο το κουδούνισμα."
+msgid "Leave empty to use the recorded message that comes with the plugin (Greek and English). Your own text is read by the browser's voice for the admin language; if the computer has no voice for that language, only the chime plays."
+msgstr "Αφήστε κενό για το ηχογραφημένο μήνυμα που συνοδεύει το plugin (ελληνικά και αγγλικά). Ένα δικό σας κείμενο το διαβάζει η φωνή του browser για τη γλώσσα του διαχειριστικού· αν ο υπολογιστής δεν έχει φωνή για αυτή τη γλώσσα, παίζει μόνο το κουδούνισμα."
 
 #: includes/class-tet-notify-settings.php:568
 msgid "Sound file"

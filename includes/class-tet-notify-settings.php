@@ -558,7 +558,7 @@ class Tet_Notify_Settings {
 			],
 			[
 				'title'       => __( 'Spoken message', 'tet-order-notifications' ),
-				'desc'        => __( 'Read by the browser\'s voice for the admin language. If the computer has no voice for that language, only the chime plays.', 'tet-order-notifications' ),
+				'desc'        => __( 'Leave empty to use the recorded message that comes with the plugin (Greek and English). Your own text is read by the browser\'s voice for the admin language; if the computer has no voice for that language, only the chime plays.', 'tet-order-notifications' ),
 				'id'          => 'tet_notify_live_voice_text',
 				'type'        => 'text',
 				'css'         => 'min-width:400px;',

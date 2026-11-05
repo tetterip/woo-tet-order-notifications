@@ -109,7 +109,7 @@ export default {
   'My own sound file': 'Δικό μου αρχείο ήχου',
   'No sound': 'Χωρίς ήχο',
   'Spoken message': 'Φωνητικό μήνυμα',
-  "Read by the browser's voice for the admin language. If the computer has no voice for that language, only the chime plays.": 'Το διαβάζει η φωνή του browser για τη γλώσσα του διαχειριστικού. Αν ο υπολογιστής δεν έχει φωνή για αυτή τη γλώσσα, παίζει μόνο το κουδούνισμα.',
+  "Leave empty to use the recorded message that comes with the plugin (Greek and English). Your own text is read by the browser's voice for the admin language; if the computer has no voice for that language, only the chime plays.": 'Αφήστε κενό για το ηχογραφημένο μήνυμα που συνοδεύει το plugin (ελληνικά και αγγλικά). Ένα δικό σας κείμενο το διαβάζει η φωνή του browser για τη γλώσσα του διαχειριστικού· αν ο υπολογιστής δεν έχει φωνή για αυτή τη γλώσσα, παίζει μόνο το κουδούνισμα.',
   'Sound file': 'Αρχείο ήχου',
   'An MP3, OGG or WAV from the media library, e.g. your own recording.': 'Ένα MP3, OGG ή WAV από τη βιβλιοθήκη πολυμέσων, π.χ. δική σας ηχογράφηση.',
   'Repeat': 'Επανάληψη',

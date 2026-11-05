@@ -115,6 +115,11 @@
 		window.speechSynthesis.speak( u );
 	}
 
+	// The recording that ships with the plugin; the browser's voice if it can't play.
+	function playVoiceFile() {
+		new window.Audio( cfg.voiceFile ).play().catch( speak );
+	}
+
 	function playSound( force ) {
 		if ( ( muted && ! force ) || cfg.sound === 'none' ) {
 			return;
@@ -128,7 +133,7 @@
 		}
 		chime();
 		if ( cfg.sound === 'voice' ) {
-			window.setTimeout( speak, 900 );
+			window.setTimeout( cfg.voiceFile ? playVoiceFile : speak, 900 );
 		}
 	}
 

@@ -28,7 +28,9 @@ assets/
   icon-256.png                         Desktop notification icon (same artwork as the update server icon)
   ttrp-admin.css, ttrp-logo.svg, ttrp.svg   Shared ttrp.gr admin design system + icons
 languages/                             tet-order-notifications.pot + Greek -el.po / -el.mo (generated)
+  sounds/new-order-{el,en}.mp3         Recorded default spoken message (OpenAI TTS, see tools/tts/)
 tools/i18n/                            el.mjs (Greek), extract.mjs, build.mjs; not in the release zip
+tools/tts/generate.sh                  Regenerates assets/sounds/ with OpenAI TTS (needs OPENAI_API_KEY); not in the zip
 tests/                                 run.php (zero-dependency runner) + test-message.php
 ttrp-common/                           Shared ttrp.gr library (synced from the update server repo; never edit)
 ```
@@ -53,8 +55,10 @@ No build step.
 - **Expired REST nonce** (tab open > 12–24 h): on 401/403 the script asks `admin-ajax.php?action=tet_notify_nonce`
   for a new one; if that fails too, the user is logged out and the bell says so.
 - **Sound**: browsers block audio until a click on the page, so the bell shows "Click to enable sound" until the
-  first pointerdown/keydown. Chime = WebAudio oscillators (no file); voice = `speechSynthesis` with a voice for the
-  user locale (else chime only); custom = a media-library URL. Several open tabs: `localStorage.tetNotifyHeard`
+  first pointerdown/keydown. Chime = WebAudio oscillators (no file); voice = chime, then the recording
+  `assets/sounds/new-order-{el,en}.mp3` for the admin language while the spoken text is the default, otherwise
+  `speechSynthesis` with a voice for the user locale (else chime only); custom = a media-library URL. The
+  recordings are made with OpenAI TTS by `tools/tts/generate.sh` (dev only); regenerate both if the wording changes. Several open tabs: `localStorage.tetNotifyHeard`
   makes only the first tab play the sound.
 - **Secrets** (bot token, Slack/Discord webhook URLs, webhook secret) are plain options rendered in password
   fields. Telegram errors never include the request URL (it contains the token).

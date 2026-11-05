@@ -61,6 +61,7 @@ class Tet_Notify_Live {
 			'sound'     => $sound,
 			'soundUrl'  => $file,
 			'voiceText' => Tet_Notify_Settings::voice_text(),
+			'voiceFile' => self::voice_file(),
 			'voiceLang' => str_replace( '_', '-', get_user_locale() ),
 			'repeat'    => Tet_Notify_Settings::yes( 'tet_notify_live_repeat' ),
 			'desktop'   => Tet_Notify_Settings::yes( 'tet_notify_live_desktop', 'yes' ),
@@ -81,6 +82,20 @@ class Tet_Notify_Live {
 				'unmute'        => __( 'Unmute', 'tet-order-notifications' ),
 			],
 		] );
+	}
+
+	/**
+	 * Recorded spoken message shipped with the plugin (assets/sounds/new-order-{lang}.mp3),
+	 * used while the spoken message is the default text. A custom text is read by the
+	 * browser's own voice instead. '' when there is no recording for the admin language.
+	 */
+	private static function voice_file(): string {
+		if ( '' !== trim( (string) get_option( 'tet_notify_live_voice_text', '' ) ) ) {
+			return '';
+		}
+		$lang = strtolower( substr( get_user_locale(), 0, 2 ) );
+		$file = 'assets/sounds/new-order-' . sanitize_file_name( $lang ) . '.mp3';
+		return file_exists( TET_NOTIFY_PATH . $file ) ? esc_url_raw( TET_NOTIFY_URL . $file ) : '';
 	}
 
 	/** Bell in the admin bar: state, mute toggle, "enable sound" / desktop prompts (filled by JS). */
