@@ -52,7 +52,7 @@ When WordPress checks for updates, and when you open **ttrp.gr Plugins → All P
 - the admin language (All Plugins page only).
 
 The server logs these requests, with the IP address, for 180 days and keeps a list of which sites run which plugin
-version. No order, customer or other personal data is sent. Questions: info@ttrp.gr.
+version. No order, customer or other personal data is sent. Questions: info@ttrp.gr. Details: [privacy policy](https://plugins.ttrp.gr/?page=privacy&lang=en) and [terms of use](https://plugins.ttrp.gr/?page=terms&lang=en); administrators see a one-time notice about this in wp-admin.
 
 ## Developers
 

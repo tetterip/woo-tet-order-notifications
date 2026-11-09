@@ -12,7 +12,7 @@ defined( 'ABSPATH' ) || exit;
 
 class TTRP_Common_Catalog {
 
-	const VERSION     = '1.0.0'; // Keep in sync with the version registered in loader.php.
+	const VERSION     = '1.1.0'; // Keep in sync with the version registered in loader.php.
 	const SERVER      = 'https://plugins.ttrp.gr/';
 	const PAGE        = 'ttrp-all-plugins';
 	const TEXT_DOMAIN = 'ttrp-common';
@@ -240,6 +240,8 @@ class TTRP_Common_Catalog {
 
 			<p class="ttrp-catalog-intro"><?php esc_html_e( 'Plugins made by ttrp.gr for WooCommerce stores. Install and activate them from here; after that they update like any other plugin.', 'ttrp-common' ); ?></p>
 
+			<?php TTRP_Common_Privacy::render_box(); ?>
+
 			<?php if ( $refreshed && null !== $items ) : ?>
 				<div class="notice notice-success is-dismissible"><p><?php esc_html_e( 'The list was updated.', 'ttrp-common' ); ?></p></div>
 			<?php endif; ?>
@@ -260,6 +262,9 @@ class TTRP_Common_Catalog {
 		<style>
 			.ttrp-catalog-refresh { display: inline; }
 			.ttrp-catalog-intro { max-width: 760px; }
+			.ttrp-catalog-privacy { display: flex; gap: 10px; max-width: 760px; margin: 12px 0 4px; padding: 10px 14px; background: #f6f5ff; border: 1px solid #dcd8fb; border-left: 4px solid #6d5bf6; border-radius: 4px; }
+			.ttrp-catalog-privacy .dashicons { color: #6d5bf6; margin-top: 2px; }
+			.ttrp-catalog-privacy p { margin: 4px 0 0; color: #50575e; }
 			.ttrp-catalog h2 { margin-top: 28px; }
 			.ttrp-catalog-grid { display: grid; grid-template-columns: repeat( auto-fill, minmax( 340px, 1fr ) ); gap: 16px; }
 			.ttrp-catalog-card { background: #fff; border: 1px solid #dcdcde; border-radius: 4px; padding: 16px; display: grid; grid-template-columns: 72px 1fr; gap: 14px; }
