@@ -12,7 +12,7 @@ defined( 'ABSPATH' ) || exit;
 
 class TTRP_Common_Catalog {
 
-	const VERSION     = '1.1.0'; // Keep in sync with the version registered in loader.php.
+	const VERSION     = '1.1.1'; // Keep in sync with the version registered in loader.php.
 	const SERVER      = 'https://plugins.ttrp.gr/';
 	const PAGE        = 'ttrp-all-plugins';
 	const TEXT_DOMAIN = 'ttrp-common';
@@ -23,6 +23,10 @@ class TTRP_Common_Catalog {
 
 	public static function init( $dir ) {
 		self::$dir = $dir;
+		// The privacy class is loaded here, not only in loader.php: ttrp_common_boot() comes from whichever plugin
+		// loads first, and a 1.0.x boot never requires it, which made render_page() fatal (1.1.1).
+		require_once __DIR__ . '/class-ttrp-common-privacy.php';
+		TTRP_Common_Privacy::init();
 		add_action( 'init', array( __CLASS__, 'load_textdomain' ) );
 		add_action( 'admin_menu', array( __CLASS__, 'register_menu' ), 6 );
 		add_filter( 'plugins_api', array( __CLASS__, 'plugins_api' ), 20, 3 );

@@ -17,7 +17,7 @@
 defined( 'ABSPATH' ) || exit;
 
 $GLOBALS['ttrp_common_versions']            = isset( $GLOBALS['ttrp_common_versions'] ) ? $GLOBALS['ttrp_common_versions'] : array();
-$GLOBALS['ttrp_common_versions']['1.1.0'] = __DIR__; // Bump together with TTRP_Common_Catalog::VERSION.
+$GLOBALS['ttrp_common_versions']['1.1.1'] = __DIR__; // Bump together with TTRP_Common_Catalog::VERSION.
 
 if ( ! function_exists( 'ttrp_common_register' ) ) {
 
@@ -44,14 +44,12 @@ if ( ! function_exists( 'ttrp_common_register' ) ) {
 
 		require_once $dir . '/class-ttrp-common-updater.php';
 		require_once $dir . '/class-ttrp-common-catalog.php';
-		require_once $dir . '/class-ttrp-common-privacy.php';
 
 		$plugins = isset( $GLOBALS['ttrp_common_plugins'] ) ? $GLOBALS['ttrp_common_plugins'] : array();
 		foreach ( $plugins as $slug => $file ) {
 			new TTRP_Common_Updater( $file, $slug );
 		}
-		TTRP_Common_Catalog::init( $dir );
-		TTRP_Common_Privacy::init();
+		TTRP_Common_Catalog::init( $dir ); // Also loads and starts TTRP_Common_Privacy.
 	}
 
 	add_action( 'plugins_loaded', 'ttrp_common_boot', 1 );
