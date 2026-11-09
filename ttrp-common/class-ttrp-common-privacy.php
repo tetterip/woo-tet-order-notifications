@@ -18,7 +18,14 @@ class TTRP_Common_Privacy {
 	const TERMS_URL   = 'https://plugins.ttrp.gr/?page=terms';
 	const PRIVACY_URL = 'https://plugins.ttrp.gr/?page=privacy';
 
+	/** @var bool Whether init() already ran (it's called from both loader.php and the catalog). */
+	private static $started = false;
+
 	public static function init() {
+		if ( self::$started ) {
+			return;
+		}
+		self::$started = true;
 		add_action( 'admin_init', array( __CLASS__, 'policy_content' ) );
 		add_action( 'admin_init', array( __CLASS__, 'maybe_dismiss' ) );
 		add_action( 'admin_notices', array( __CLASS__, 'notice' ) );
