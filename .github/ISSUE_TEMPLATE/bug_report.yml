@@ -1,0 +1,61 @@
+name: Bug report
+description: Something doesn't work as it should.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! **Security problems go to info@ttrp.gr, not here.**
+  - type: input
+    id: plugin-version
+    attributes:
+      label: Plugin version
+      placeholder: "e.g. 1.0.0"
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: WordPress / WooCommerce / PHP versions
+      placeholder: "e.g. WordPress 6.9, WooCommerce 10.3, PHP 8.2"
+    validations:
+      required: true
+  - type: dropdown
+    id: checkout
+    attributes:
+      label: Checkout type
+      options:
+        - Block checkout
+        - Classic (shortcode) checkout
+        - Not related to the checkout
+        - I don't know
+    validations:
+      required: false
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What you expected, and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Go to …
+        2. Click …
+        3. See …
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Errors or logs
+      description: PHP errors, browser console errors or WooCommerce logs, if any. Remove keys, passwords and customer data first.
+      render: text
+  - type: textarea
+    id: other-plugins
+    attributes:
+      label: Theme and other plugins
+      description: Theme, page builder or plugins that may be involved (caching, checkout, other payment or shipping plugins).

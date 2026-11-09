@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security vulnerability
+    url: https://github.com/tetterip/woo-tet-order-notifications/security/policy
+    about: Please report security problems privately to info@ttrp.gr, not in a public issue.
+  - name: All ttrp.gr plugins
+    url: https://plugins.ttrp.gr/
+    about: Downloads and the other WooCommerce plugins from ttrp.gr.
