@@ -74,3 +74,53 @@ msgstr "Ενεργό"
 #, php-format
 msgid "Update to %s"
 msgstr "Ενημέρωση σε %s"
+
+#: class-ttrp-common-privacy.php
+msgid "ttrp.gr plugins get their updates from plugins.ttrp.gr. To check for updates, this site sends that server its address, its WordPress version and the installed versions of the ttrp.gr plugins; the server also records the IP address. No customer, order or other personal data of your shop is sent."
+msgstr "Τα plugins του ttrp.gr παίρνουν τις ενημερώσεις τους από το plugins.ttrp.gr. Για τον έλεγχο ενημερώσεων, αυτό το site στέλνει σε εκείνον τον server τη διεύθυνσή του, την έκδοση του WordPress και τις εγκατεστημένες εκδόσεις των plugins του ttrp.gr· ο server καταγράφει επίσης τη διεύθυνση IP. Δεν στέλνεται κανένα στοιχείο πελατών, παραγγελιών ή άλλο προσωπικό δεδομένο του καταστήματός σας."
+
+#: class-ttrp-common-privacy.php
+msgid "Terms of use"
+msgstr "Όροι χρήσης"
+
+#: class-ttrp-common-privacy.php
+msgid "Privacy policy"
+msgstr "Πολιτική απορρήτου"
+
+#: class-ttrp-common-privacy.php
+msgid "ttrp.gr plugins: updates and privacy"
+msgstr "Plugins του ttrp.gr: ενημερώσεις και απόρρητο"
+
+#: class-ttrp-common-privacy.php
+msgid "Got it"
+msgstr "Εντάξει"
+
+#: class-ttrp-common-privacy.php
+msgid "Data and privacy"
+msgstr "Δεδομένα και απόρρητο"
+
+#: class-ttrp-common-privacy.php
+msgid "Opening this page also sends the admin language."
+msgstr "Το άνοιγμα αυτής της σελίδας στέλνει και τη γλώσσα του διαχειριστικού."
+
+#: class-ttrp-common-privacy.php
+msgid "This site uses plugins by ttrp.gr, which get their updates from plugins.ttrp.gr. The text below is a suggestion; it concerns the site, not its visitors."
+msgstr "Αυτό το site χρησιμοποιεί plugins του ttrp.gr, που παίρνουν τις ενημερώσεις τους από το plugins.ttrp.gr. Το παρακάτω κείμενο είναι πρόταση· αφορά το site και όχι τους επισκέπτες του."
+
+#: class-ttrp-common-privacy.php
+msgid "Suggested text:"
+msgstr "Προτεινόμενο κείμενο:"
+
+#: class-ttrp-common-privacy.php
+msgid "To receive updates for some of its plugins, this website connects to plugins.ttrp.gr and sends the website address, the WordPress version and the plugin versions. No data about visitors or customers is sent."
+msgstr "Για να λαμβάνει ενημερώσεις για ορισμένα plugins του, αυτός ο ιστότοπος συνδέεται με το plugins.ttrp.gr και στέλνει τη διεύθυνση του ιστότοπου, την έκδοση του WordPress και τις εκδόσεις των plugins. Δεν στέλνεται κανένα στοιχείο επισκεπτών ή πελατών."
+
+#. translators: %s: link to the plugins.ttrp.gr privacy policy
+#: class-ttrp-common-privacy.php
+#, php-format
+msgid "See the %s of plugins.ttrp.gr."
+msgstr "Δείτε την %s του plugins.ttrp.gr."
+
+#: class-ttrp-common-privacy.php
+msgid "privacy policy"
+msgstr "πολιτική απορρήτου"

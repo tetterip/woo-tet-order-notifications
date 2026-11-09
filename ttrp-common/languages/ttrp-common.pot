@@ -73,3 +73,53 @@ msgstr ""
 #, php-format
 msgid "Update to %s"
 msgstr ""
+
+#: class-ttrp-common-privacy.php
+msgid "ttrp.gr plugins get their updates from plugins.ttrp.gr. To check for updates, this site sends that server its address, its WordPress version and the installed versions of the ttrp.gr plugins; the server also records the IP address. No customer, order or other personal data of your shop is sent."
+msgstr ""
+
+#: class-ttrp-common-privacy.php
+msgid "Terms of use"
+msgstr ""
+
+#: class-ttrp-common-privacy.php
+msgid "Privacy policy"
+msgstr ""
+
+#: class-ttrp-common-privacy.php
+msgid "ttrp.gr plugins: updates and privacy"
+msgstr ""
+
+#: class-ttrp-common-privacy.php
+msgid "Got it"
+msgstr ""
+
+#: class-ttrp-common-privacy.php
+msgid "Data and privacy"
+msgstr ""
+
+#: class-ttrp-common-privacy.php
+msgid "Opening this page also sends the admin language."
+msgstr ""
+
+#: class-ttrp-common-privacy.php
+msgid "This site uses plugins by ttrp.gr, which get their updates from plugins.ttrp.gr. The text below is a suggestion; it concerns the site, not its visitors."
+msgstr ""
+
+#: class-ttrp-common-privacy.php
+msgid "Suggested text:"
+msgstr ""
+
+#: class-ttrp-common-privacy.php
+msgid "To receive updates for some of its plugins, this website connects to plugins.ttrp.gr and sends the website address, the WordPress version and the plugin versions. No data about visitors or customers is sent."
+msgstr ""
+
+#. translators: %s: link to the plugins.ttrp.gr privacy policy
+#: class-ttrp-common-privacy.php
+#, php-format
+msgid "See the %s of plugins.ttrp.gr."
+msgstr ""
+
+#: class-ttrp-common-privacy.php
+msgid "privacy policy"
+msgstr ""
