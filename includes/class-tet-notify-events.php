@@ -63,7 +63,7 @@ class Tet_Notify_Events {
 	public static function claim( int $order_id ): bool {
 		global $wpdb;
 		$done = $wpdb->query( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			$wpdb->prepare( 'INSERT IGNORE INTO ' . self::table() . ' (order_id, created_at) VALUES (%d, %s)', $order_id, gmdate( 'Y-m-d H:i:s' ) ) // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			$wpdb->prepare( 'INSERT IGNORE INTO ' . self::table() . ' (order_id, created_at) VALUES (%d, %s)', $order_id, gmdate( 'Y-m-d H:i:s' ) ) // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name built from $wpdb->prefix, values are placeholders.
 		);
 		return 1 === (int) $done;
 	}
@@ -77,7 +77,7 @@ class Tet_Notify_Events {
 	public static function after( int $after_id, int $limit = 10 ): array {
 		global $wpdb;
 		$rows = $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			$wpdb->prepare( 'SELECT id, order_id FROM ' . self::table() . ' WHERE id > %d ORDER BY id ASC LIMIT %d', $after_id, $limit ), // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			$wpdb->prepare( 'SELECT id, order_id FROM ' . self::table() . ' WHERE id > %d ORDER BY id ASC LIMIT %d', $after_id, $limit ), // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name built from $wpdb->prefix, values are placeholders.
 			ARRAY_A
 		);
 		return array_map( static function ( $r ) {
@@ -88,7 +88,7 @@ class Tet_Notify_Events {
 	public static function cleanup(): void {
 		global $wpdb;
 		$wpdb->query( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			$wpdb->prepare( 'DELETE FROM ' . self::table() . ' WHERE created_at < %s', gmdate( 'Y-m-d H:i:s', time() - self::RETENTION_DAYS * DAY_IN_SECONDS ) ) // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			$wpdb->prepare( 'DELETE FROM ' . self::table() . ' WHERE created_at < %s', gmdate( 'Y-m-d H:i:s', time() - self::RETENTION_DAYS * DAY_IN_SECONDS ) ) // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- table name built from $wpdb->prefix, values are placeholders.
 		);
 	}
 }

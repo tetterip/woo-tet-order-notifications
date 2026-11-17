@@ -8,9 +8,9 @@ defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
 
 global $wpdb;
 
-$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}tet_notify_events" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.SchemaChange
+$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}tet_notify_events" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery -- uninstall: drop the plugin's own table, nothing to cache.
 
-$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE 'tet\\_notify\\_%'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE 'tet\\_notify\\_%'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery -- uninstall: remove all plugin options at once.
 
 delete_metadata( 'user', 0, 'tet_notify_muted', '', true );
 

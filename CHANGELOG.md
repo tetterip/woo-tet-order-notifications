@@ -2,6 +2,17 @@
 
 All notable changes to this project are documented here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [Semantic Versioning](https://semver.org/).
 
+## [1.0.1] - 2026-11-17
+
+### Added
+
+- Shared ttrp-common library 1.1.1: a one-time admin notice on what update checks send to plugins.ttrp.gr, a "Data and privacy" box on **ttrp.gr Plugins → All Plugins**, and a suggested paragraph for the WordPress privacy policy guide.
+
+### Changed
+
+- Documented why the plugin's own SQL (events table, uninstall) is safe, so the health check stops reporting it.
+- Tested up to WordPress 7.1 and WooCommerce 11.3.
+
 ## [1.0.0] - 2026-11-05
 
 ### Added
